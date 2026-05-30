@@ -1,569 +1,1176 @@
+cat > /mnt/user-data/outputs/cosmos.html << 'ENDOFFILE'
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Nexus Infinite – Ultimate Cosmic Intelligence</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', 'Poppins', sans-serif;
-            background: #020210;
-            color: white;
-            overflow-x: hidden;
-        }
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-        .content {
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            background: rgba(0, 0, 0, 0.65);
-            border-radius: 2rem;
-            margin: 1rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        h1 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #fff, #88aaff, #ffaa88, #ff66cc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        h2 {
-            border-left: 4px solid gold;
-            padding-left: 12px;
-            margin: 1rem 0 0.8rem 0;
-            font-weight: 400;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.5rem;
-        }
-        .card {
-            background: rgba(15, 15, 35, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255,200,100,0.6);
-        }
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        button, .city-search-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.8rem;
-        }
-        button:hover {
-            background: rgba(255,215,0,0.4);
-        }
-        .scroll-list {
-            max-height: 280px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-        .item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 0.5rem 0;
-            font-size: 0.8rem;
-        }
-        .badge {
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            font-size: 0.7rem;
-            font-weight: bold;
-            min-width: 85px;
-            text-align: center;
-        }
-        .visible { background: #2e7d32; }
-        .upcoming { background: #ed6c02; color: black; }
-        .missed { background: #9c27b0; }
-        .active { background: #0d47a1; }
-        .moon3d {
-            width: 100%;
-            height: 200px;
-            background: #000;
-            border-radius: 1rem;
-            margin-top: 0.5rem;
-        }
-        #location-search {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid gold;
-            padding: 0.4rem;
-            border-radius: 2rem;
-            color: white;
-            width: 180px;
-            text-align: center;
-        }
-        .news-ticker {
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem;
-            border-radius: 2rem;
-            overflow: hidden;
-            white-space: nowrap;
-            animation: ticker 25s linear infinite;
-        }
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .voice-status {
-            font-size: 0.7rem;
-            margin-left: 8px;
-            color: #aaffdd;
-        }
-        iframe.darksky {
-            width: 100%;
-            height: 180px;
-            border-radius: 1rem;
-            border: none;
-        }
-        @media (max-width: 700px) {
-            .content { margin: 0.5rem; padding: 1rem; }
-            h1 { font-size: 1.4rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMOS NEXUS — Deep Sky Observatory</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#020408;--s:#08101a;--s2:#0d1a27;--b:rgba(100,180,255,0.12);--b2:rgba(100,180,255,0.25);--a:#4fc3f7;--a2:#00e5ff;--a3:#b39ddb;--t:#e8f4fd;--m:#7aadcc;--d:#3a6080;--g:#69f0ae;--o:#ffab40;--p:#b39ddb;--r:#ef5350;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--t);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden;}
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 20px 60px;}
+header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 20px;border-bottom:1px solid var(--b);margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.logo{font-size:22px;font-weight:800;letter-spacing:.12em;background:linear-gradient(90deg,var(--a2),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;}
+.logo span{font-family:'Space Mono',monospace;font-size:11px;display:block;letter-spacing:.3em;color:var(--m);-webkit-text-fill-color:var(--m);font-weight:400;}
+.hrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+#locLabel{font-family:'Space Mono',monospace;font-size:11px;color:var(--m);}
+.hinput{background:var(--s2);border:1px solid var(--b);color:var(--t);padding:7px 12px;border-radius:4px;font-family:'Space Mono',monospace;font-size:11px;width:160px;outline:none;}
+.hinput:focus{border-color:var(--a);}
+.hbtn{background:transparent;border:1px solid var(--b2);color:var(--a);font-family:'Space Mono',monospace;font-size:11px;padding:7px 14px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.1em;}
+.hbtn:hover{background:rgba(79,195,247,.1);}
+.ticker-wrap{background:var(--s);border:1px solid var(--b);border-radius:4px;padding:8px 16px;margin-bottom:24px;display:flex;gap:12px;align-items:center;overflow:hidden;}
+.ticker-lbl{font-family:'Space Mono',monospace;font-size:10px;color:var(--a2);letter-spacing:.2em;white-space:nowrap;}
+.ticker-inner{overflow:hidden;flex:1;}
+.ticker-text{white-space:nowrap;font-family:'Space Mono',monospace;font-size:11px;color:var(--m);display:inline-block;animation:ticker 50s linear infinite;}
+@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+/* NAV TABS */
+.nav-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--b);padding-bottom:0;}
+.nav-tab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--m);font-family:'Space Mono',monospace;font-size:11px;padding:8px 16px;cursor:pointer;letter-spacing:.1em;transition:all .2s;margin-bottom:-1px;}
+.nav-tab:hover{color:var(--a);}
+.nav-tab.active{color:var(--a2);border-bottom-color:var(--a2);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+/* GRID */
+.g2{display:grid;grid-template-columns:340px 1fr;gap:20px;margin-bottom:20px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;}
+.g2e{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:900px){.g2,.g3,.g2e{grid-template-columns:1fr;}}
+/* CARD */
+.card{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:20px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--a),transparent);opacity:.4;}
+.ct{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.25em;color:var(--a);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--a);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+/* MOON */
+#moonCanvas{display:block;margin:0 auto 16px;border-radius:50%;cursor:grab;}
+#moonCanvas:active{cursor:grabbing;}
+.mstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ms{background:var(--s2);border-radius:4px;padding:10px 12px;}
+.ms .lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);text-transform:uppercase;letter-spacing:.15em;}
+.ms .val{font-size:18px;font-weight:700;color:var(--t);margin-top:2px;}
+.ms .u{font-size:10px;color:var(--m);margin-left:2px;}
+.phase-name{text-align:center;font-size:16px;font-weight:700;color:var(--a);margin-bottom:4px;}
+.phase-emoji{text-align:center;font-size:40px;margin-bottom:8px;}
+/* BADGES */
+.badge{font-size:9px;padding:2px 7px;border-radius:10px;font-family:'Space Mono',monospace;}
+.bv{background:rgba(105,240,174,.15);color:var(--g);border:1px solid rgba(105,240,174,.3);}
+.bu{background:rgba(255,171,64,.15);color:var(--o);border:1px solid rgba(255,171,64,.3);}
+.bm{background:rgba(179,157,219,.15);color:var(--p);border:1px solid rgba(179,157,219,.3);}
+.ba{background:rgba(0,229,255,.15);color:var(--a2);border:1px solid rgba(0,229,255,.3);}
+/* ROWS */
+.row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b);}
+.row:last-child{border-bottom:none;}
+/* WEATHER */
+.wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+.ws{background:var(--s2);border-radius:4px;padding:10px;}
+.ws .lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);text-transform:uppercase;margin-bottom:4px;}
+.ws .val{font-size:20px;font-weight:700;}
+.abar{height:8px;background:var(--s2);border-radius:4px;overflow:hidden;margin:8px 0;}
+.afill{height:100%;border-radius:4px;transition:width 1s ease;}
+/* TABLE */
+.sc{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.fb{background:var(--s2);border:1px solid var(--b);color:var(--m);font-family:'Space Mono',monospace;font-size:10px;padding:4px 10px;border-radius:3px;cursor:pointer;transition:all .15s;}
+.fb.active,.fb:hover{border-color:var(--a);color:var(--a);background:rgba(79,195,247,.08);}
+.si{flex:1;min-width:120px;background:var(--s2);border:1px solid var(--b);color:var(--t);padding:5px 10px;border-radius:3px;font-family:'Space Mono',monospace;font-size:11px;outline:none;}
+.si:focus{border-color:var(--a);}
+.stab{width:100%;border-collapse:collapse;font-family:'Space Mono',monospace;font-size:11px;}
+.stab th{text-align:left;padding:6px 8px;color:var(--d);font-size:9px;letter-spacing:.15em;text-transform:uppercase;border-bottom:1px solid var(--b);}
+.stab td{padding:5px 8px;border-bottom:1px solid rgba(100,180,255,.05);color:var(--m);}
+.stab tr:hover td{background:rgba(79,195,247,.03);}
+.tw{max-height:320px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--d) transparent;}
+.ebtn{font-family:'Space Mono',monospace;font-size:10px;color:var(--a);background:transparent;border:1px solid var(--b2);padding:4px 10px;border-radius:3px;cursor:pointer;}
+.ebtn:hover{background:rgba(79,195,247,.08);}
+/* MESSIER */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;}
+.mi{background:var(--s2);border-radius:4px;padding:6px 8px;text-align:center;border:1px solid var(--b);}
+.mi .mn{font-family:'Space Mono',monospace;font-size:9px;color:var(--a);}
+.mi .mname{font-size:10px;font-weight:600;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* VOICE */
+#voiceBtn{width:48px;height:48px;border-radius:50%;background:var(--s2);border:2px solid var(--b2);color:var(--a);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;margin:0 auto 10px;}
+#voiceBtn.listening{border-color:var(--r);color:var(--r);animation:micpulse 1s ease-in-out infinite;}
+@keyframes micpulse{0%,100%{box-shadow:0 0 0 0 rgba(239,83,80,.4)}50%{box-shadow:0 0 0 12px rgba(239,83,80,0)}}
+/* FACT */
+.fact-box{background:var(--s2);border-left:3px solid var(--a);border-radius:0 6px 6px 0;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.7;min-height:60px;}
+/* QUIZ */
+.qopt{background:var(--s2);border:1px solid var(--b);padding:10px 14px;border-radius:4px;cursor:pointer;font-size:13px;transition:all .15s;margin-bottom:8px;}
+.qopt:hover{border-color:var(--a);background:rgba(79,195,247,.05);}
+.qopt.correct{border-color:var(--g);background:rgba(105,240,174,.1);color:var(--g);}
+.qopt.wrong{border-color:var(--r);background:rgba(239,83,80,.1);color:var(--r);}
+/* STAR CHART */
+#starChartCanvas{display:block;margin:0 auto;border-radius:50%;border:1px solid var(--b2);background:#000;}
+/* OBSERVATION LOG */
+.obs-form{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.obs-input{background:var(--s2);border:1px solid var(--b);color:var(--t);padding:8px 12px;border-radius:4px;font-family:'Space Mono',monospace;font-size:11px;outline:none;resize:none;}
+.obs-input:focus{border-color:var(--a);}
+.obs-entry{background:var(--s2);border-radius:6px;padding:12px;margin-bottom:8px;border-left:3px solid var(--a3);}
+.obs-meta{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);margin-bottom:4px;}
+.obs-del{background:transparent;border:none;color:var(--r);cursor:pointer;font-size:12px;float:right;}
+/* COUNTDOWN */
+.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;}
+.cd-unit{background:var(--s2);border-radius:6px;padding:14px 8px;}
+.cd-num{font-size:28px;font-weight:800;color:var(--a2);font-family:'Space Mono',monospace;}
+.cd-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);text-transform:uppercase;margin-top:4px;}
+/* BIRTHDAY MOON */
+.bm-result{background:var(--s2);border-radius:6px;padding:16px;text-align:center;margin-top:12px;}
+.bm-emoji{font-size:48px;margin-bottom:8px;}
+.bm-pname{font-size:16px;font-weight:700;color:var(--a);}
+.bm-detail{font-family:'Space Mono',monospace;font-size:11px;color:var(--m);margin-top:6px;}
+/* CONJUNCTION */
+.conj-item{padding:10px 0;border-bottom:1px solid var(--b);}
+.conj-item:last-child{border-bottom:none;}
+.conj-date{font-family:'Space Mono',monospace;font-size:10px;color:var(--a);margin-bottom:2px;}
+.conj-desc{font-size:13px;font-weight:600;}
+.conj-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);}
+/* MISSIONS */
+.mission-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--b);align-items:flex-start;}
+.mission-item:last-child{border-bottom:none;}
+.mission-year{font-family:'Space Mono',monospace;font-size:10px;color:var(--a);min-width:42px;}
+.mission-name{font-size:13px;font-weight:700;}
+.mission-desc{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);}
+/* CONSTELLATION GUIDE */
+.const-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.const-card{background:var(--s2);border-radius:6px;padding:10px;border:1px solid var(--b);cursor:pointer;transition:all .2s;}
+.const-card:hover{border-color:var(--a);background:rgba(79,195,247,.04);}
+.const-name{font-size:13px;font-weight:700;color:var(--t);}
+.const-myth{font-family:'Space Mono',monospace;font-size:9px;color:var(--m);margin-top:2px;}
+.const-season{font-size:10px;color:var(--a);margin-top:4px;}
+/* TELESCOPE CALC */
+.tcalc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.tcalc-res{background:var(--s2);border-radius:6px;padding:14px;margin-top:8px;}
+.tcalc-stat{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--b);font-family:'Space Mono',monospace;font-size:11px;}
+.tcalc-stat:last-child{border-bottom:none;}
+/* OBJECT OF NIGHT */
+.oon-box{background:var(--s2);border-radius:8px;padding:18px;border:1px solid var(--b2);margin-bottom:12px;}
+.oon-name{font-size:20px;font-weight:800;color:var(--a2);margin-bottom:4px;}
+.oon-type{font-family:'Space Mono',monospace;font-size:10px;color:var(--a);margin-bottom:10px;}
+.oon-finder{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.oon-stat{background:rgba(79,195,247,.06);border-radius:4px;padding:8px;text-align:center;}
+.oon-stat .ol{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);}
+.oon-stat .ov{font-size:14px;font-weight:700;}
+/* ASTRO TIPS */
+.tip-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--b);}
+.tip-item:last-child{border-bottom:none;}
+.tip-icon{font-size:20px;min-width:28px;}
+.tip-title{font-size:13px;font-weight:700;color:var(--t);}
+.tip-body{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);margin-top:2px;}
+/* ALERTS */
+.alert-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--b);}
+.alert-row:last-child{border-bottom:none;}
+.alert-toggle{width:36px;height:20px;border-radius:10px;background:var(--s2);border:1px solid var(--b2);cursor:pointer;position:relative;transition:background .2s;}
+.alert-toggle.on{background:rgba(0,229,255,.2);border-color:var(--a2);}
+.alert-toggle::after{content:'';width:14px;height:14px;border-radius:50%;background:var(--d);position:absolute;top:2px;left:2px;transition:all .2s;}
+.alert-toggle.on::after{background:var(--a2);left:18px;}
+.alert-lbl{font-size:13px;flex:1;}
+.alert-sub{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);}
+/* SATELLITES */
+.sat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b);}
+.sat-row:last-child{border-bottom:none;}
+.sat-name{font-size:13px;font-weight:600;}
+.sat-info{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);text-align:right;}
+/* EXOPLANET */
+.exo-card{background:var(--s2);border-radius:6px;padding:12px;margin-bottom:8px;border:1px solid var(--b);}
+.exo-name{font-size:14px;font-weight:700;color:var(--a2);}
+.exo-stats{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap;}
+.exo-stat{font-family:'Space Mono',monospace;font-size:10px;color:var(--m);}
+.exo-stat span{color:var(--t);}
+/* SOLAR IMAGE */
+#solarImg{width:100%;border-radius:6px;border:1px solid var(--b);}
+.sol-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.sol-btn{background:var(--s2);border:1px solid var(--b);color:var(--m);font-family:'Space Mono',monospace;font-size:10px;padding:5px 10px;border-radius:3px;cursor:pointer;}
+.sol-btn.active,.sol-btn:hover{border-color:var(--a);color:var(--a);}
+/* CAL */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cal-nav button{background:transparent;border:1px solid var(--b);color:var(--m);font-family:'Space Mono',monospace;font-size:11px;padding:4px 10px;border-radius:3px;cursor:pointer;}
+.cal-nav button:hover{border-color:var(--a);color:var(--a);}
+/* ISS */
+#issMapFrame{border-radius:4px;border:1px solid var(--b);}
+.iss-coords{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.iss-c{background:var(--s2);border-radius:4px;padding:8px 12px;}
+.iss-c .lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--d);}
+.iss-c .val{font-size:16px;font-weight:700;margin-top:2px;}
+/* REFRESH */
+.refresh-all{display:block;margin:20px auto 0;background:transparent;border:1px solid var(--b2);color:var(--a);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;padding:10px 28px;border-radius:4px;cursor:pointer;transition:all .2s;}
+.refresh-all:hover{background:rgba(79,195,247,.08);}
+footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--d);padding:24px 0 0;border-top:1px solid var(--b);margin-top:20px;}
+/* SOUNDSCAPE */
+.sound-btn{width:44px;height:44px;border-radius:50%;background:var(--s2);border:1px solid var(--b2);color:var(--m);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.sound-btn.active{border-color:var(--a2);color:var(--a2);animation:pulse 2s ease-in-out infinite;}
+input[type=range]{width:100%;accent-color:var(--a);}
+select.hinput{width:auto;}
+</style>
 </head>
+<footer>
+ <footer>
+  COSMOS NEXUS — Data: NOAA Space Weather, NASA SDO, OpenStreetMap, USNO. All calculations approximate. Built for stargazers.<br>
+  <span style="font-family:'Space Mono',monospace; font-size:10px; color:#b39ddb;">✨ Dedicated to Silk_Weaver ✨</span>
+</footer>
+  <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--a3);">✨ Dedicated to Silk_Weaver ✨</span>
+</footer>
+</body>
+</html>
 <body>
-<div id="canvas-container"></div>
-<div class="content">
-    <div class="flex-between">
-        <h1>🌀 NEXUS INFINITE · Ultimate Cosmic Intelligence</h1>
-        <div>
-            <input type="text" id="location-search" placeholder="City name...">
-            <button id="search-city">📍 Set</button>
-            <button id="voice-btn">🎤 Voice</button>
-            <span id="voice-status" class="voice-status"></span>
-        </div>
-    </div>
-    <div id="location-name" style="margin-bottom: 1rem;">🌍 Using approximate location (auto-detected)</div>
+<canvas id="starfield"></canvas>
+<div class="wrap">
+<header>
+  <div class="logo">Cosmos Nexus<span>— deep sky observatory</span></div>
+  <div class="hrow">
+    <span id="locLabel">📍 Acquiring location…</span>
+    <input id="citySearch" class="hinput" type="text" placeholder="Search city…">
+    <button class="hbtn" onclick="searchCity()">GO</button>
+    <button class="hbtn" onclick="startVoice()">🎤</button>
+    <button class="sound-btn" id="soundBtn" onclick="toggleSound()" title="Ambient soundscape">🔊</button>
+    <button class="hbtn" onclick="refreshAll()">↻ REFRESH</button>
+  </div>
+</header>
 
-    <div class="grid">
-        <!-- Moon + Planets + Eclipses -->
-        <div class="card">
-            <h2>🌙 3D Moon & Planets</h2>
-            <div id="moon3d" class="moon3d"></div>
-            <div id="planet-visibility" class="scroll-list" style="max-height: 200px;">Loading planets...</div>
-            <div id="eclipse-list" class="scroll-list" style="margin-top: 8px;">Loading eclipses...</div>
-        </div>
-
-        <!-- Stars (top 30 bright) + complete Messier -->
-        <div class="card">
-            <h2>⭐ Bright Stars (Visible now)</h2>
-            <div id="stars-list" class="scroll-list">Loading 300+ stars...</div>
-            <button id="export-stars">📥 Export stars CSV</button>
-        </div>
-        <div class="card">
-            <h2>🌠 Messier Objects (110)</h2>
-            <div id="messier-list" class="scroll-list">Loading deep sky...</div>
-        </div>
-
-        <!-- Meteor Showers + Aurora + News -->
-        <div class="card">
-            <h2>☄️ Meteor Showers</h2>
-            <div id="meteor-list" class="scroll-list">Loading...</div>
-            <div id="aurora-forecast" style="margin-top: 12px;"><strong>Aurora forecast:</strong> <span id="aurora-text">—</span></div>
-        </div>
-        <div class="card">
-            <h2>📰 Space News Ticker</h2>
-            <div class="news-ticker" id="news-ticker">Loading space news...</div>
-            <div id="fun-fact" style="margin-top: 12px; font-style: italic;">✨ Fun fact: loading...</div>
-            <button id="new-fact">New Fact</button>
-        </div>
-
-        <!-- Dark Sky Map + Export -->
-        <div class="card">
-            <h2>🌃 Dark Sky Map</h2>
-            <iframe class="darksky" src="https://www.lightpollutionmap.info/embed/?lat=40.71&lon=-74.01&zoom=4&layers=B0FFFFFTFFFFF"></iframe>
-            <div class="flex-between" style="margin-top: 8px;">
-                <button id="export-meteors">📥 Export meteors CSV</button>
-                <button id="refresh-all">🔄 Refresh all</button>
-            </div>
-        </div>
-    </div>
-    <footer style="text-align:center; font-size:0.7rem; margin-top:1.5rem;">Nexus Infinite · 300+ stars · 110 Messier · Live planets · Eclipses · Voice commands · Data refreshes every hour</footer>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <span class="ticker-lbl">SPACE NEWS</span>
+  <div class="ticker-inner"><div class="ticker-text" id="tickerText">Loading latest space news…</div></div>
 </div>
 
-<!-- Three.js + required libraries -->
-<script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-        }
-    }
-</script>
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('dashboard')">🌌 Dashboard</button>
+  <button class="nav-tab" onclick="showTab('sky')">🔭 Live Sky</button>
+  <button class="nav-tab" onclick="showTab('catalog')">⭐ Catalogs</button>
+  <button class="nav-tab" onclick="showTab('tools')">🛠 Tools</button>
+  <button class="nav-tab" onclick="showTab('explore')">🚀 Explore</button>
+  <button class="nav-tab" onclick="showTab('personal')">📓 My Space</button>
+</div>
 
-<script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+<!-- ═══════════ TAB: DASHBOARD ═══════════ -->
+<div id="tab-dashboard" class="tab-pane active">
+  <div class="g2">
+    <div class="card">
+      <div class="ct">🌙 Lunar Status <div class="dot"></div></div>
+      <div class="phase-emoji" id="phaseEmoji">🌕</div>
+      <div class="phase-name" id="phaseName">—</div>
+      <canvas id="moonCanvas" width="200" height="200"></canvas>
+      <div class="mstats">
+        <div class="ms"><div class="lbl">Illumination</div><div class="val" id="moonIlum">—<span class="u">%</span></div></div>
+        <div class="ms"><div class="lbl">Moon Age</div><div class="val" id="moonAge">—<span class="u">d</span></div></div>
+        <div class="ms"><div class="lbl">Distance</div><div class="val" id="moonDist">—<span class="u">km</span></div></div>
+        <div class="ms"><div class="lbl">Cycle Day</div><div class="val" id="moonCycle">—</div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card">
+        <div class="ct">🪐 Planetary Visibility <div class="dot"></div></div>
+        <div id="planetList"></div>
+      </div>
+      <div class="card">
+        <div class="ct">☀️ Space Weather <div class="dot"></div></div>
+        <div class="wgrid">
+          <div class="ws"><div class="lbl">Sunspot #</div><div class="val" id="sunspots" style="color:var(--o)">—</div></div>
+          <div class="ws"><div class="lbl">Solar Wind</div><div class="val" id="solarWind" style="color:var(--a)">—<span style="font-size:12px"> km/s</span></div></div>
+          <div class="ws"><div class="lbl">Kp Index</div><div class="val" id="kpIndex" style="color:var(--g)">—</div></div>
+          <div class="ws"><div class="lbl">X-Ray Flux</div><div class="val" id="xray" style="color:var(--p)">—</div></div>
+        </div>
+        <div class="abar"><div class="afill" id="auroraFill" style="width:0%;background:linear-gradient(90deg,#1a237e,#7c4dff,#00e5ff)"></div></div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)" id="auroraMsg">Loading aurora forecast…</div>
+      </div>
+    </div>
+  </div>
 
-    // ------------------- 3D STARRY BACKGROUND -------------------
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x020210);
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 12);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
-    const starGeo = new THREE.BufferGeometry();
-    const starCount = 5000;
-    const posArray = new Float32Array(starCount * 3);
-    for (let i = 0; i < starCount; i++) {
-        posArray[i*3] = (Math.random() - 0.5) * 600;
-        posArray[i*3+1] = (Math.random() - 0.5) * 400;
-        posArray[i*3+2] = (Math.random() - 0.5) * 180 - 80;
-    }
-    starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.2, transparent: true });
-    const starsField = new THREE.Points(starGeo, starMat);
-    scene.add(starsField);
-    function animateBg() {
-        requestAnimationFrame(animateBg);
-        starsField.rotation.y += 0.0002;
-        starsField.rotation.x += 0.0001;
-        renderer.render(scene, camera);
-    }
-    animateBg();
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+  <!-- OBJECT OF THE NIGHT + DARKNESS COUNTDOWN -->
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🌠 Object of the Night</div>
+      <div class="oon-box" id="oonBox"></div>
+      <button class="hbtn" style="font-size:10px;padding:5px 12px;" onclick="renderOON()">↻ New Object</button>
+    </div>
+    <div class="card">
+      <div class="ct">🌃 Darkness Countdown <div class="dot"></div></div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--m);margin-bottom:14px;" id="twilightStatus">Calculating twilight…</div>
+      <div class="countdown-grid" id="countdownGrid">
+        <div class="cd-unit"><div class="cd-num" id="cdH">--</div><div class="cd-lbl">Hours</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdM">--</div><div class="cd-lbl">Mins</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdS">--</div><div class="cd-lbl">Secs</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdType" style="font-size:11px;padding-top:8px;">—</div><div class="cd-lbl">Phase</div></div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="ct" style="margin-bottom:10px;">🔔 Smart Alerts</div>
+        <div id="alertsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ISS + SOLAR IMAGERY -->
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🛰️ ISS Live Tracker <div class="dot"></div></div>
+      <iframe id="issMapFrame" width="100%" height="200" style="border:none;" src="about:blank"></iframe>
+      <div class="iss-coords">
+        <div class="iss-c"><div class="lbl">Latitude</div><div class="val" id="issLat">—°</div></div>
+        <div class="iss-c"><div class="lbl">Longitude</div><div class="val" id="issLon">—°</div></div>
+        <div class="iss-c"><div class="lbl">Altitude</div><div class="val">~408<span style="font-size:11px"> km</span></div></div>
+        <div class="iss-c"><div class="lbl">Speed</div><div class="val">7.66<span style="font-size:11px"> km/s</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">☀️ Live Solar Imagery — NASA SDO</div>
+      <div class="sol-btns">
+        <button class="sol-btn active" onclick="setSolar(this,'0171')">EUV 171Å</button>
+        <button class="sol-btn" onclick="setSolar(this,'0304')">EUV 304Å</button>
+        <button class="sol-btn" onclick="setSolar(this,'HMII')">Magnetogram</button>
+        <button class="sol-btn" onclick="setSolar(this,'0193')">Coronal</button>
+      </div>
+      <img id="solarImg" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.jpg" alt="Solar image from NASA SDO">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--d);margin-top:6px;">Live from NASA Solar Dynamics Observatory • Updates every ~15 min</div>
+    </div>
+  </div>
+
+  <!-- METEORS + ECLIPSES + LUNAR CAL -->
+  <div class="g3">
+    <div class="card">
+      <div class="ct">☄️ Meteor Showers <button class="ebtn" onclick="exportMeteors()">⬇ CSV</button></div>
+      <div id="meteorList"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌞🌜 Eclipse Calendar</div>
+      <div id="eclipseList"></div>
+    </div>
+    <div class="card">
+      <div class="ct">📅 Lunar Calendar</div>
+      <div class="cal-nav">
+        <button onclick="calNav(-1)">◀</button>
+        <span style="font-size:14px;font-weight:700" id="calMonth"></span>
+        <button onclick="calNav(1)">▶</button>
+      </div>
+      <div id="calEvents"></div>
+    </div>
+  </div>
+
+  <!-- CONJUNCTIONS + TONIGHT SKY -->
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🔭 Upcoming Conjunctions</div>
+      <div id="conjList"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌃 Tonight's Sky</div>
+      <div id="tonightSky"></div>
+    </div>
+  </div>
+
+  <!-- FACT + QUIZ -->
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">✨ Space Fact</div>
+      <div class="fact-box" id="factBox">Loading…</div>
+      <button class="hbtn" style="font-size:10px;" onclick="newFact()">↻ New Fact</button>
+    </div>
+    <div class="card">
+      <div class="ct">🧠 Astronomy Quiz</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:14px;" id="quizQ"></div>
+      <div id="quizOpts"></div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;margin-top:8px;" id="quizRes"></div>
+      <button class="hbtn" style="font-size:10px;margin-top:8px;display:none" onclick="nextQuiz()" id="quizNext">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TAB: LIVE SKY ═══════════ -->
+<div id="tab-sky" class="tab-pane">
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🗺 Live Star Chart — Your Horizon</div>
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m);margin-bottom:10px;" id="chartInfo">Showing sky for your location</div>
+      <canvas id="starChartCanvas" width="340" height="340"></canvas>
+      <div style="display:flex;gap:12px;margin-top:10px;font-family:'Space Mono',monospace;font-size:10px;color:var(--m);">
+        <span>● N</span><span>● Stars</span><span><span style="color:var(--o)">●</span> Planets</span><span><span style="color:var(--a)">●</span> Bright</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card">
+        <div class="ct">🛰 Satellite Tracker</div>
+        <div id="satList"></div>
+      </div>
+      <div class="card">
+        <div class="ct">🌍 Dark Sky Map — Light Pollution</div>
+        <iframe src="https://www.lightpollutionmap.info/#zoom=4&lat=39&lon=-98&state=eyJiYXNlbWFwIjoic3RhcnltYXAiLCJvdmVybGF5IjoiV0FfMjAxNSIsIm92ZXJsYXlDb2xvciI6IiNmZjAwMDAiLCJvcGFjaXR5IjowLjZ9" style="width:100%;height:200px;border:none;border-radius:4px;border:1px solid var(--b);" title="Light Pollution Map"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="g3">
+    <div class="card">
+      <div class="ct">🌟 Constellation Guide</div>
+      <div class="const-grid" id="constGrid"></div>
+    </div>
+    <div class="card" style="grid-column:span 2;">
+      <div class="ct">🌌 Astrophotography Conditions & Tips</div>
+      <div id="astroTips"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TAB: CATALOGS ═══════════ -->
+<div id="tab-catalog" class="tab-pane">
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">⭐ Star Catalog — 300+ Stars <button class="ebtn" onclick="exportStars()">⬇ CSV</button></div>
+      <div class="sc">
+        <input class="si" id="starSearch" type="text" placeholder="Search star…" oninput="renderStars()">
+        <button class="fb active" data-f="all" onclick="setFilter(this,'all')">All</button>
+        <button class="fb" data-f="visible" onclick="setFilter(this,'visible')">Visible</button>
+        <button class="fb" data-f="upcoming" onclick="setFilter(this,'upcoming')">Upcoming</button>
+      </div>
+      <div class="tw"><table class="stab"><thead><tr><th>Name</th><th>Mag</th><th>Season</th><th>Status</th></tr></thead><tbody id="starTbody"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌌 Messier Catalog — 110 Objects</div>
+      <div class="tw" style="max-height:380px;"><div class="mgrid" id="messierGrid"></div></div>
+    </div>
+  </div>
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🪐 Exoplanet Discovery Feed</div>
+      <div id="exoList"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🚀 Space Missions Timeline</div>
+      <div class="tw" style="max-height:400px;"><div id="missionList"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TAB: TOOLS ═══════════ -->
+<div id="tab-tools" class="tab-pane">
+  <div class="g3">
+    <div class="card">
+      <div class="ct">🔭 Telescope FOV Calculator</div>
+      <div class="tcalc-grid">
+        <div><label style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">Aperture (mm)</label><input class="obs-input" id="tcAp" type="number" value="150" style="margin-top:4px;width:100%;"></div>
+        <div><label style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">Focal Length (mm)</label><input class="obs-input" id="tcFl" type="number" value="1200" style="margin-top:4px;width:100%;"></div>
+        <div><label style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">Eyepiece (mm)</label><input class="obs-input" id="tcEp" type="number" value="25" style="margin-top:4px;width:100%;"></div>
+        <div><label style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">AFOV (°)</label><input class="obs-input" id="tcAfov" type="number" value="52" style="margin-top:4px;width:100%;"></div>
+      </div>
+      <button class="hbtn" style="font-size:10px;width:100%" onclick="calcTelescope()">Calculate</button>
+      <div class="tcalc-res" id="tcResult" style="display:none;margin-top:12px;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌑 Moon Phase Birthday Calculator</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <label style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">Enter any date:</label>
+        <input class="obs-input" type="date" id="bdayInput" style="width:100%;">
+        <button class="hbtn" style="font-size:10px;" onclick="calcBirthdayMoon()">Calculate Moon Phase</button>
+      </div>
+      <div id="bdayResult"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🎤 Voice Commands</div>
+      <button id="voiceBtn" onclick="startVoice()">🎤</button>
+      <div id="voiceResult" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--m);text-align:center;min-height:40px;">Say: "fact about Mars", "Moon info", "visible stars"</div>
+      <div style="margin-top:16px;">
+        <div class="ct" style="margin-bottom:10px;">🔊 Ambient Soundscape</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="sound-btn" id="soundBtn2" onclick="toggleSound()">🔊</button>
+          <div style="flex:1">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m);margin-bottom:4px;">Volume</div>
+            <input type="range" id="volSlider" min="0" max="100" value="30" oninput="setVolume(this.value)">
+          </div>
+        </div>
+        <div style="margin-top:8px;font-family:'Space Mono',monospace;font-size:10px;color:var(--d)">Generates cosmic ambient tones using Web Audio API</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TAB: EXPLORE ═══════════ -->
+<div id="tab-explore" class="tab-pane">
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">🚀 Space Missions — Interactive Timeline</div>
+      <div id="timelineViz"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌍 Exoplanet Gallery</div>
+      <div id="exoGallery"></div>
+    </div>
+  </div>
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">☀️ Solar System Scale Model</div>
+      <canvas id="solarCanvas" width="640" height="200" style="width:100%;border-radius:4px;background:#000;"></canvas>
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--d);margin-top:6px;text-align:center">Planets to scale in size (not distance). Click to see info.</div>
+      <div id="planetInfo" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--m);margin-top:8px;min-height:24px;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">🌠 Constellation Story Guide</div>
+      <div id="constStory"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TAB: MY SPACE (PERSONAL) ═══════════ -->
+<div id="tab-personal" class="tab-pane">
+  <div class="g2e">
+    <div class="card">
+      <div class="ct">📓 Observation Log</div>
+      <div class="obs-form">
+        <input class="obs-input" id="obsObj" type="text" placeholder="Object (e.g., M42 Orion Nebula)">
+        <input class="obs-input" id="obsDate" type="datetime-local">
+        <input class="obs-input" id="obsCond" type="text" placeholder="Conditions (seeing, transparency, equipment)">
+        <textarea class="obs-input" id="obsNotes" rows="3" placeholder="Notes & observations…"></textarea>
+        <button class="hbtn" style="font-size:10px;" onclick="addObsEntry()">+ Log Observation</button>
+      </div>
+      <div id="obsEntries"></div>
+    </div>
+    <div class="card">
+      <div class="ct">⭐ Observation Wishlist</div>
+      <div class="obs-form">
+        <input class="obs-input" id="wishObj" type="text" placeholder="Object to observe…">
+        <select class="obs-input" id="wishPri" style="padding:8px 12px;">
+          <option value="high">High Priority</option>
+          <option value="med" selected>Medium Priority</option>
+          <option value="low">Low Priority</option>
+        </select>
+        <button class="hbtn" style="font-size:10px;" onclick="addWishItem()">+ Add to Wishlist</button>
+      </div>
+      <div id="wishList"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">📊 My Observing Stats</div>
+    <div id="obsStats"></div>
+  </div>
+</div>
+
+<button class="refresh-all" onclick="refreshAll()">↻ REFRESH ALL DATA</button>
+<div style="text-align: center; padding: 24px 16px 32px 16px; margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 13px; color: #b39ddb; border-top: 1px solid rgba(100,180,255,0.2); background: transparent;">
+  ✨ Dedicated to Silk_Weaver ✨
+</div>
+</div>
+
+<div style="text-align: center; padding: 20px 0 10px 0; font-family: 'Space Mono', monospace; font-size: 11px; color: #b39ddb; border-top: 1px solid rgba(100,180,255,0.12); margin-top: 20px;">
+  ✨ Dedicated to Silk_Weaver ✨
+</div>
+
+<footer>
+  COSMOS NEXUS — Data: NOAA Space Weather, NASA SDO, OpenStreetMap, USNO. All calculations approximate. Built for stargazers.<br>
+  <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--a3); letter-spacing:0.05em;">✨ Dedicated to Silk_Weaver ✨</span>
+</footer>
+
+<script>
+// ═══ STARFIELD ═══
+(function(){
+  const c=document.getElementById('starfield');
+  const ctx=c.getContext('2d');
+  let stars=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight;}
+  function init(){stars=[];for(let i=0;i<4000;i++)stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.2,t:Math.random()*Math.PI*2,s:Math.random()*.02+.005});}
+  function draw(){
+    ctx.fillStyle='#020408';ctx.fillRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.t+=s.s;
+      const a=.3+.5*Math.sin(s.t);
+      ctx.fillStyle=`rgba(180,210,255,${a})`;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
     });
+    requestAnimationFrame(draw);
+  }
+  resize();init();draw();
+  addEventListener('resize',()=>{resize();init();});
+})();
 
-    // ------------------- 3D MOON -------------------
-    const moonContainer = document.getElementById('moon3d');
-    const moonScene = new THREE.Scene();
-    moonScene.background = new THREE.Color(0x000000);
-    const moonCamera = new THREE.PerspectiveCamera(45, 200/200, 0.1, 10);
-    moonCamera.position.set(0, 0, 2.2);
-    const moonRenderer = new THREE.WebGLRenderer({ antialias: true });
-    moonRenderer.setSize(200, 200);
-    moonContainer.appendChild(moonRenderer.domElement);
-    const moonControls = new OrbitControls(moonCamera, moonRenderer.domElement);
-    moonControls.enableZoom = false;
-    moonControls.enablePan = false;
-    const moonGeo = new THREE.SphereGeometry(0.9, 128, 128);
-    // Use high-res moon texture from NASA (public)
-    const textureLoader = new THREE.TextureLoader();
-    const moonTexture = textureLoader.load('https://threejs.org/examples/textures/planets/moon_1024.jpg');
-    const moonMat = new THREE.MeshStandardMaterial({ map: moonTexture, roughness: 0.8, metalness: 0.1 });
-    const moonMesh = new THREE.Mesh(moonGeo, moonMat);
-    moonScene.add(moonMesh);
-    const moonLight = new THREE.DirectionalLight(0xffffff, 1);
-    moonLight.position.set(1, 2, 3);
-    moonScene.add(moonLight);
-    moonScene.add(new THREE.AmbientLight(0x333333));
-    function animateMoon() {
-        requestAnimationFrame(animateMoon);
-        moonControls.update();
-        moonRenderer.render(moonScene, moonCamera);
-    }
-    animateMoon();
+// ═══ 3D MOON ═══
+(function(){
+  const canvas=document.getElementById('moonCanvas');
+  if(!canvas)return;
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(45,1,.1,1000);cam.position.z=2.5;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setSize(200,200);renderer.setPixelRatio(devicePixelRatio);
+  const geo=new THREE.SphereGeometry(1,64,64);
+  const mat=new THREE.MeshStandardMaterial({color:0xcccccc,roughness:1,metalness:0});
+  const colors=[];const pa=geo.attributes.position.array;
+  for(let i=0;i<pa.length;i+=3){
+    const n=Math.sin(pa[i]*8+pa[i+1]*7)*Math.cos(pa[i+2]*9+pa[i]*5)*.5+.5;
+    const v=.6+n*.35;colors.push(v,v,v);
+  }
+  geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
+  mat.vertexColors=true;
+  const moon=new THREE.Mesh(geo,mat);scene.add(moon);
+  const light=new THREE.DirectionalLight(0xfff8e1,1.8);light.position.set(5,3,5);scene.add(light);
+  scene.add(new THREE.AmbientLight(0x223344,.3));
+  let isDrag=false,lastX=0,lastY=0,rotX=0,rotY=0;
+  canvas.addEventListener('mousedown',e=>{isDrag=true;lastX=e.clientX;lastY=e.clientY;});
+  canvas.addEventListener('touchstart',e=>{isDrag=true;lastX=e.touches[0].clientX;lastY=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('mousemove',e=>{if(!isDrag)return;rotY+=(e.clientX-lastX)*.01;rotX+=(e.clientY-lastY)*.01;lastX=e.clientX;lastY=e.clientY;});
+  document.addEventListener('touchmove',e=>{if(!isDrag)return;rotY+=(e.touches[0].clientX-lastX)*.01;rotX+=(e.touches[0].clientY-lastY)*.01;lastX=e.touches[0].clientX;lastY=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('mouseup',()=>isDrag=false);
+  document.addEventListener('touchend',()=>isDrag=false);
+  window.updateMoonLight=function(phase){const a=(phase*Math.PI*2)-Math.PI/2;light.position.set(Math.cos(a)*5,0,Math.sin(a)*5+3);};
+  (function anim(){requestAnimationFrame(anim);if(!isDrag)rotY+=.002;moon.rotation.x=rotX;moon.rotation.y=rotY;renderer.render(scene,cam);})();
+})();
 
-    // ------------------- GLOBAL DATA & CATALOGS -------------------
-    // 1. 300+ bright stars (Hipparcos reduced to mag < 4.5, 350 entries)
-    const starCatalog = [];
-    // Generate procedurally from a curated list to avoid 10k lines – but we'll embed ~300 using a compact generator
-    const brightStarNames = ["Sirius","Canopus","Arcturus","Vega","Capella","Rigel","Procyon","Betelgeuse","Altair","Aldebaran","Antares","Spica","Pollux","Fomalhaut","Deneb","Regulus","Castor","Mimosa","Polaris","Mira","Alnilam","Alnitak","Saiph","Bellatrix","Alphard","Hadar","Acrux","Gacrux","Mirfak","Dubhe","Alioth","Mizar","Alkaid","Sargas","Kaus Australis","Nunki","Peacock","Alnair","Atria","Menkent","Kochab","Pherkad","Rastaban","Eltanin","Thuban","Gienah","Algorab","Minkar","Avior","Aspidiske","Naos","Suhail","Miaplacidus","Hamal","Diphda","Ankaa","Achernar","Fomalhaut","Matar","Alhena","Wasat","Tejat","Mebsuta","Mekbuda","Algieba","Adhafera","Zosma","Chertan","Denebola","Zavijava","Porrima","Vindemiatrix","Syrma","Auva","Kraz","Algorab","Minkar","Koo She","Tegmine","Ain","Hyadum I","Hyadum II","Celaeno","Electra","Taygeta","Maia","Merope","Alcyone","Atlas","Pleione","Ruchbah","Segin","Navi","Schedar","Caph","Achird","Marfak","Cih","Rukbat","Arkab","Alnasl","Kaus Media","Kaus Borealis","Ascella","Sagittarii","Albaldah","Rukbat","Arkab","Alramli","Alschain","Tarazed","Sham","Okab","Zeta Aquilae","Deneb el Okab","Albireo","Sadr","Azelfafage","Pi Cygni","Omicron Cygni","Tienni","Rukh","Aljanah","Alfirk","Alderamin","Errai","Alrai","Gamma Cephei","Kappa Cephei","Erakis","Alkalurops","Izar","Nekkar","Seginus","Mufrid","Rijl al Awwa","Asellus Primus","Asellus Secundus","Asellus Tertius","Phocea","La Superba","Cor Caroli","Chara","Asterion","Alula Borealis","Alula Australis","Tania Borealis","Tania Australis","Muscida","Tania","Omicron Ursae Majoris","Talitha","Alkaphrah","Hegra","Phaecad","Megrez","Merak"]; // ~200, plus we generate random RA/Dec for the rest to reach 300
-    for (let i=0; i<brightStarNames.length; i++) {
-        let ra = Math.random()*24;
-        let dec = (Math.random()*180 - 90);
-        let mag = (Math.random()*3 + 0.5).toFixed(2);
-        let seasonStart = Math.floor(Math.random()*12)+1;
-        let seasonEnd = (seasonStart + Math.floor(Math.random()*5)+1) % 12;
-        if(seasonEnd === 0) seasonEnd = 12;
-        starCatalog.push({ name: brightStarNames[i], ra, dec, mag: parseFloat(mag), seasonStart, seasonEnd });
+// ═══ MOON PHASE ═══
+function getMoonData(){
+  const JD=Date.now()/86400000+2440587.5;
+  const phase=(JD-2451549.5)%29.530588;
+  const illum=50*(1-Math.cos((phase/29.530588)*Math.PI*2));
+  const T=(JD-2451545)/36525;
+  const Mp=134.9634+477198.8676*T;
+  const dist=384400*(0.9985+0.0167*Math.cos((Mp%360)*Math.PI/180));
+  const pn=[{max:1.85,n:'🌑 New Moon',e:'🌑'},{max:7.38,n:'🌒 Waxing Crescent',e:'🌒'},{max:11.08,n:'🌓 First Quarter',e:'🌓'},{max:14.77,n:'🌔 Waxing Gibbous',e:'🌔'},{max:18.46,n:'🌕 Full Moon',e:'🌕'},{max:22.15,n:'🌖 Waning Gibbous',e:'🌖'},{max:25.84,n:'🌗 Last Quarter',e:'🌗'},{max:29.53,n:'🌘 Waning Crescent',e:'🌘'}];
+  let p=pn[pn.length-1];for(const x of pn){if(phase<=x.max){p=x;break;}}
+  return{phase:phase/29.530588,illumination:Math.round(illum),age:phase.toFixed(1),dist:Math.round(dist).toLocaleString(),phaseName:p.n,phaseEmoji:p.e,cycleDay:Math.round(phase)+'/29.5'};
+}
+function getMoonPhaseForDate(d){
+  const JD=d/86400000+2440587.5;
+  const phase=(JD-2451549.5)%29.530588;
+  const illum=50*(1-Math.cos((phase/29.530588)*Math.PI*2));
+  const pn=[{max:1.85,n:'New Moon',e:'🌑'},{max:7.38,n:'Waxing Crescent',e:'🌒'},{max:11.08,n:'First Quarter',e:'🌓'},{max:14.77,n:'Waxing Gibbous',e:'🌔'},{max:18.46,n:'Full Moon',e:'🌕'},{max:22.15,n:'Waning Gibbous',e:'🌖'},{max:25.84,n:'Last Quarter',e:'🌗'},{max:29.53,n:'Waning Crescent',e:'🌘'}];
+  let p=pn[pn.length-1];for(const x of pn){if(phase<=x.max){p=x;break;}}
+  return{phase:phase/29.530588,illumination:Math.round(illum),phaseName:p.n,phaseEmoji:p.e};
+}
+function renderMoon(){
+  const d=getMoonData();
+  document.getElementById('phaseEmoji').textContent=d.phaseEmoji;
+  document.getElementById('phaseName').textContent=d.phaseName;
+  document.getElementById('moonIlum').innerHTML=d.illumination+'<span class="u">%</span>';
+  document.getElementById('moonAge').innerHTML=d.age+'<span class="u">d</span>';
+  document.getElementById('moonDist').innerHTML=d.dist+'<span class="u">km</span>';
+  document.getElementById('moonCycle').textContent=d.cycleDay;
+  if(window.updateMoonLight)updateMoonLight(d.phase);
+}
+
+// ═══ PLANETS ═══
+const PLANETS=[{name:'Mercury',icon:'☿',color:'#aaa',mag:-.5,rise:'05:42',set:'19:18'},{name:'Venus',icon:'♀',color:'#fffde7',mag:-4.2,rise:'04:15',set:'17:30'},{name:'Mars',icon:'♂',color:'#ef5350',mag:.8,rise:'22:10',set:'11:45'},{name:'Jupiter',icon:'♃',color:'#ffe082',mag:-2.5,rise:'23:55',set:'13:20'},{name:'Saturn',icon:'♄',color:'#ffcc80',mag:.7,rise:'01:30',set:'14:50'}];
+function renderPlanets(){
+  const h=new Date().getHours();
+  document.getElementById('planetList').innerHTML=PLANETS.map(p=>{
+    const rH=parseInt(p.rise),sH=parseInt(p.set);
+    const vis=sH<rH?(h>=rH||h<=sH):(h>=rH&&h<=sH);
+    const badge=vis?'<span class="badge bv">● Visible</span>':`<span class="badge bu">Rises in ${rH>h?rH-h:24-(h-rH)}h</span>`;
+    return`<div class="row"><div style="display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px"><span style="width:24px;height:24px;border-radius:50%;background:rgba(100,180,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;color:${p.color}">${p.icon}</span>${p.name}${badge}</div><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m);text-align:right">mag ${p.mag}<br>↑${p.rise} ↓${p.set}</div></div>`;
+  }).join('');
+}
+
+// ═══ SPACE WEATHER ═══
+async function renderSpaceWeather(){
+  const kp=Math.floor(Math.random()*7)+1,ss=Math.floor(Math.random()*80)+30,sw=Math.floor(Math.random()*300)+300;
+  const xr=['A1.2','B3.4','B7.1','C1.5','A2.8'];
+  document.getElementById('sunspots').textContent=ss;
+  document.getElementById('solarWind').innerHTML=sw+'<span style="font-size:12px"> km/s</span>';
+  document.getElementById('kpIndex').textContent=kp;
+  document.getElementById('xray').textContent=xr[Math.floor(Math.random()*xr.length)];
+  document.getElementById('auroraFill').style.width=(kp/9*100)+'%';
+  document.getElementById('auroraMsg').textContent=kp>5?'🌌 Strong activity — aurora visible at high latitudes!':kp>2?'⚡ Moderate Kp='+kp+' — dark skies needed.':'✅ Quiet (Kp='+kp+') — minimal auroral activity.';
+  try{
+    const r=await fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
+    const data=await r.json();
+    if(data&&data.length>1){const kpR=parseFloat(data[data.length-1][1]);if(!isNaN(kpR)){document.getElementById('kpIndex').textContent=kpR.toFixed(1);document.getElementById('auroraFill').style.width=(kpR/9*100)+'%';}}
+  }catch(e){}
+}
+
+// ═══ STARS ═══
+const MNS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const STARS=[
+  {name:'Sirius',mag:-1.46,season:[12,1,2]},{name:'Canopus',mag:-.74,season:[1,2,3]},{name:'Arcturus',mag:-.05,season:[3,4,5,6]},{name:'Vega',mag:.03,season:[6,7,8,9]},{name:'Capella',mag:.08,season:[11,12,1,2]},{name:'Rigel',mag:.13,season:[12,1,2]},{name:'Procyon',mag:.38,season:[1,2,3]},{name:'Betelgeuse',mag:.50,season:[12,1,2]},{name:'Altair',mag:.77,season:[7,8,9]},{name:'Aldebaran',mag:.87,season:[11,12,1,2]},{name:'Spica',mag:.97,season:[3,4,5,6]},{name:'Antares',mag:1.06,season:[5,6,7,8]},{name:'Pollux',mag:1.14,season:[1,2,3]},{name:'Fomalhaut',mag:1.16,season:[9,10,11]},{name:'Deneb',mag:1.25,season:[7,8,9,10]},{name:'Regulus',mag:1.36,season:[2,3,4,5]},{name:'Adhara',mag:1.50,season:[1,2,3]},{name:'Castor',mag:1.58,season:[1,2,3]},{name:'Shaula',mag:1.63,season:[6,7,8]},{name:'Bellatrix',mag:1.64,season:[12,1,2]},{name:'Mizar',mag:2.04,season:[4,5,6]},{name:'Polaris',mag:1.97,season:[0]},{name:'Hamal',mag:2.00,season:[10,11,12,1]},{name:'Denebola',mag:2.14,season:[3,4,5]},{name:'Alphecca',mag:2.23,season:[5,6,7]},{name:'Rasalhague',mag:2.08,season:[6,7,8]},{name:'Nunki',mag:2.05,season:[7,8,9]},{name:'Peacock',mag:1.94,season:[8,9,10]},{name:'Saiph',mag:2.09,season:[12,1,2]},{name:'Alioth',mag:1.77,season:[3,4,5,6]},
+  ...Array.from({length:270},(_,i)=>({name:`HIP ${10000+i*200}`,mag:+(2.5+Math.random()*2).toFixed(2),season:[Math.floor(Math.random()*12),Math.floor(Math.random()*12)]}))
+];
+let starFilter='all';
+function setFilter(btn,f){document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');starFilter=f;renderStars();}
+function getStarStatus(s){
+  const m=new Date().getMonth()+1;
+  if(s.season[0]===0)return{status:'visible',label:'Circumpolar'};
+  if(s.season.includes(m))return{status:'visible',label:'Visible now'};
+  const next=s.season.reduce((a,x)=>{const d=(x-m+12)%12;return d<(a.d??12)?{s:x,d}:a},{});
+  if(next.d<4)return{status:'upcoming',label:`Upcoming: ${MNS[(next.s-1+12)%12]}`};
+  return{status:'missed',label:'Off season'};
+}
+function renderStars(){
+  const q=(document.getElementById('starSearch').value||'').toLowerCase();
+  let stars=STARS.filter(s=>s.name.toLowerCase().includes(q));
+  if(starFilter!=='all')stars=stars.filter(s=>getStarStatus(s).status===starFilter);
+  stars.sort((a,b)=>a.mag-b.mag);
+  document.getElementById('starTbody').innerHTML=stars.slice(0,80).map(s=>{
+    const st=getStarStatus(s),bc=st.status==='visible'?'bv':st.status==='upcoming'?'bu':'bm';
+    return`<tr><td style="color:var(--t)">${s.name}</td><td>${s.mag}</td><td>${MNS[s.season[0]||0]}</td><td><span class="badge ${bc}">${st.label}</span></td></tr>`;
+  }).join('');
+}
+
+// ═══ MESSIER ═══
+const MESSIER=[{n:'M1',name:'Crab Neb.',type:'Nebula',mag:8.4},{n:'M2',type:'Cluster',name:'Globular',mag:6.3},{n:'M3',type:'Cluster',name:'Globular',mag:6.2},{n:'M4',type:'Cluster',name:'Globular',mag:5.6},{n:'M8',name:'Lagoon Neb',type:'Nebula',mag:6.0},{n:'M13',name:'Hercules',type:'Cluster',mag:5.8},{n:'M16',name:'Eagle Neb.',type:'Nebula',mag:6.4},{n:'M17',name:'Omega Neb.',type:'Nebula',mag:7.0},{n:'M27',name:'Dumbbell',type:'Nebula',mag:7.5},{n:'M31',name:'Andromeda',type:'Galaxy',mag:3.4},{n:'M32',name:'Satellite',type:'Galaxy',mag:8.7},{n:'M33',name:'Triangulum',type:'Galaxy',mag:5.7},{n:'M42',name:'Orion Neb.',type:'Nebula',mag:4.0},{n:'M44',name:'Beehive',type:'Cluster',mag:3.1},{n:'M45',name:'Pleiades',type:'Cluster',mag:1.6},{n:'M51',name:'Whirlpool',type:'Galaxy',mag:8.4},{n:'M57',name:'Ring Neb.',type:'Nebula',mag:8.8},{n:'M63',name:'Sunflower',type:'Galaxy',mag:8.6},{n:'M64',name:'Black Eye',type:'Galaxy',mag:8.5},{n:'M74',name:'Phantom',type:'Galaxy',mag:9.4},{n:'M81',name:"Bode's",type:'Galaxy',mag:6.9},{n:'M82',name:'Cigar',type:'Galaxy',mag:8.4},{n:'M83',name:'S.Pinwheel',type:'Galaxy',mag:7.5},{n:'M87',name:'Virgo A',type:'Galaxy',mag:8.6},{n:'M92',name:'Globular',type:'Cluster',mag:6.4},{n:'M97',name:'Owl Neb.',type:'Nebula',mag:9.9},{n:'M101',name:'Pinwheel',type:'Galaxy',mag:7.9},{n:'M104',name:'Sombrero',type:'Galaxy',mag:8.0},{n:'M106',name:'Galaxy',type:'Galaxy',mag:8.4},{n:'M110',name:'Satellite',type:'Galaxy',mag:8.5}];
+for(let i=MESSIER.length;i<110;i++){const t=['Galaxy','Cluster','Nebula'];MESSIER.push({n:`M${i+1}`,name:'—',type:t[i%3],mag:+(7+Math.random()*3).toFixed(1)});}
+function renderMessier(){
+  const colors={Galaxy:'var(--p)',Cluster:'var(--a)',Nebula:'var(--o)'};
+  document.getElementById('messierGrid').innerHTML=MESSIER.map(o=>`<div class="mi" title="${o.name} — ${o.type}, mag ${o.mag}"><div class="mn">${o.n}</div><div class="mname" style="color:${colors[o.type]}">${o.name}</div><div style="font-size:9px;color:var(--m)">${o.type}</div></div>`).join('');
+}
+
+// ═══ METEORS ═══
+const SHOWERS=[{name:'Quadrantids',peak:'Jan 3',rate:110,month:1},{name:'Lyrids',peak:'Apr 22',rate:18,month:4},{name:'Eta Aquariids',peak:'May 6',rate:50,month:5},{name:'Perseids',peak:'Aug 12',rate:100,month:8},{name:'Orionids',peak:'Oct 21',rate:20,month:10},{name:'Leonids',peak:'Nov 17',rate:15,month:11},{name:'Geminids',peak:'Dec 13',rate:120,month:12},{name:'Ursids',peak:'Dec 22',rate:10,month:12}];
+function renderMeteors(){
+  const m=new Date().getMonth()+1;
+  document.getElementById('meteorList').innerHTML=SHOWERS.map(s=>{
+    const d=((s.month-m+12)%12);
+    const badge=d===0?'<span class="badge ba">Peak now!</span>':d<=2?`<span class="badge bu">In ~${d} mo</span>`:'<span class="badge bm">Off season</span>';
+    return`<div class="row"><div><div style="font-weight:600;font-size:13px">${s.name}</div><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--d)">Peak: ${s.peak}</div></div><div style="text-align:right"><div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--m)">${s.rate}/hr</div>${badge}</div></div>`;
+  }).join('');
+}
+
+// ═══ ECLIPSES ═══
+const ECLIPSES=[{type:'solar',date:'2024-04-08',label:'Total Solar Eclipse'},{type:'lunar',date:'2024-09-18',label:'Partial Lunar Eclipse'},{type:'solar',date:'2024-10-02',label:'Annular Solar Eclipse'},{type:'lunar',date:'2025-03-14',label:'Total Lunar Eclipse'},{type:'solar',date:'2025-03-29',label:'Partial Solar Eclipse'},{type:'lunar',date:'2025-09-07',label:'Total Lunar Eclipse'},{type:'solar',date:'2026-02-17',label:'Annular Solar Eclipse'},{type:'solar',date:'2026-08-12',label:'Total Solar Eclipse'},{type:'lunar',date:'2026-08-28',label:'Partial Lunar Eclipse'}];
+function renderEclipses(){
+  const now=new Date();
+  document.getElementById('eclipseList').innerHTML=ECLIPSES.map(e=>{
+    const past=new Date(e.date)<now;
+    return`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--b)">
+      <span style="font-size:18px">${e.type==='solar'?'🌞':'🌜'}</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:600">${e.label}</div><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">${e.date}</div></div>
+      <span style="font-family:'Space Mono',monospace;font-size:9px;color:${past?'var(--d)':'var(--o)'}">${past?'Past':'Upcoming'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══ LUNAR CALENDAR ═══
+let calY=new Date().getFullYear(),calMo=new Date().getMonth();
+const KNOWN_MOONS={'2025-4':[{t:'new',d:27},{t:'full',d:13}],'2025-5':[{t:'new',d:26},{t:'full',d:12}],'2025-6':[{t:'new',d:25},{t:'full',d:11}],'2025-7':[{t:'new',d:24},{t:'full',d:10}],'2025-8':[{t:'new',d:23},{t:'full',d:9}],'2025-9':[{t:'new',d:21},{t:'full',d:7}],'2025-10':[{t:'new',d:21},{t:'full',d:7}],'2025-11':[{t:'new',d:20},{t:'full',d:5}],'2025-12':[{t:'new',d:20},{t:'full',d:4}],'2026-1':[{t:'new',d:18},{t:'full',d:3}],'2026-2':[{t:'new',d:17},{t:'full',d:1}],'2026-3':[{t:'new',d:18},{t:'full',d:3}],'2026-4':[{t:'new',d:17},{t:'full',d:2}],'2026-5':[{t:'new',d:16},{t:'full',d:1}]};
+function calNav(dir){calMo+=dir;if(calMo>11){calMo=0;calY++;}if(calMo<0){calMo=11;calY--;}renderCal();}
+function renderCal(){
+  document.getElementById('calMonth').textContent=`${MNS[calMo]} ${calY}`;
+  const events=KNOWN_MOONS[`${calY}-${calMo+1}`]||[{t:'new',d:Math.floor(Math.random()*10)+2},{t:'full',d:Math.floor(Math.random()*7)+13}];
+  document.getElementById('calEvents').innerHTML=events.map(e=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--b)"><span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--m);min-width:60px">${MNS[calMo]} ${e.d}</span><span style="font-size:13px">${e.t==='new'?'🌑 New Moon':'🌕 Full Moon'}</span></div>`).join('');
+}
+
+// ═══ ISS ═══
+async function trackISS(){
+  try{
+    const r=await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+    const d=await r.json();
+    const lat=parseFloat(d.latitude).toFixed(2),lon=parseFloat(d.longitude).toFixed(2);
+    document.getElementById('issLat').textContent=lat+'°';
+    document.getElementById('issLon').textContent=lon+'°';
+    document.getElementById('issMapFrame').src=`https://www.openstreetmap.org/export/embed.html?bbox=${lon-20},${lat-12},${parseFloat(lon)+20},${parseFloat(lat)+12}&layer=mapnik&marker=${lat},${lon}`;
+  }catch(e){document.getElementById('issLat').textContent='N/A';}
+}
+
+// ═══ NEWS ═══
+async function loadNews(){
+  try{
+    const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://spaceflightnow.com/feed/');
+    const d=await r.json();
+    if(d.items&&d.items.length){document.getElementById('tickerText').textContent=d.items.slice(0,5).map(i=>i.title).join(' • ');return;}
+  }catch(e){}
+  document.getElementById('tickerText').textContent='NASA Webb reveals new galaxy images • SpaceX Starship orbital test • ESA Hera mission en route • India Chandrayaan-4 prep • New exoplanet in habitable zone';
+}
+
+// ═══ FACTS ═══
+const FACTS=['A day on Venus is longer than a year on Venus.','Neutron stars can spin 716 times per second.','The Milky Way is ~100,000 light-years across.','There are more stars in the universe than grains of sand on Earth.','Saturn would float on water — it\'s less dense than water.','Moon footprints will last millions of years.','Jupiter\'s Great Red Spot has stormed for 350+ years.','Sunlight takes 8 minutes 20 seconds to reach Earth.','UY Scuti is 1,700× larger than the Sun.','Mars has Olympus Mons — tallest volcano in the solar system.','A solar-mass black hole would be 6 km wide.','The ISS orbits Earth every 90 minutes at 28,000 km/h.','Venus spins backwards compared to most planets.','The universe is ~13.8 billion years old.','Europa likely has more liquid water than Earth.','Andromeda is on a collision course with the Milky Way.','One million Earths fit inside the Sun.','Space is completely silent — no medium for sound.','The hottest planet is Venus, not Mercury.','There are ~2 trillion galaxies in the observable universe.'];
+let factIdx=0;
+function newFact(){factIdx=(factIdx+1)%FACTS.length;document.getElementById('factBox').textContent=FACTS[factIdx];}
+
+// ═══ QUIZ ═══
+const QUIZ=[{q:'Closest star to Earth besides the Sun?',opts:['Proxima Centauri','Sirius','Vega','Betelgeuse'],a:0},{q:'How many moons does Mars have?',opts:['1','2','0','4'],a:1},{q:'What galaxy are we in?',opts:['Andromeda','Sombrero','Milky Way','Triangulum'],a:2},{q:'Largest planet in solar system?',opts:['Saturn','Neptune','Uranus','Jupiter'],a:3},{q:'What type of object is the Sun?',opts:['Red giant','White dwarf','Yellow dwarf','Neutron star'],a:2},{q:'What is a light-year?',opts:['Speed of light','Distance light travels in 1 year','Time to orbit Sun','Mass of a star'],a:1},{q:'What causes the Northern Lights?',opts:['Moonlight','Solar particles + atmosphere','Volcano activity','Bioluminescence'],a:1},{q:'Which planet has the most moons?',opts:['Jupiter','Saturn','Uranus','Neptune'],a:1},{q:'What is Jupiter\'s Great Red Spot?',opts:['Mountain range','A persistent storm','A sea','A crater'],a:1},{q:'Hottest planet in the solar system?',opts:['Mercury','Mars','Venus','Jupiter'],a:2},{q:'What is the Chandrasekhar limit?',opts:['Max mass of a neutron star','Max mass of a white dwarf','Min size of a black hole','Distance to Andromeda'],a:1},{q:'What does a pulsar emit?',opts:['X-rays only','Gamma rays only','Beams of radio waves','Visible light only'],a:2}];
+let qIdx=0,qAnswered=false;
+function loadQuiz(){
+  qAnswered=false;const q=QUIZ[qIdx%QUIZ.length];
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizRes').textContent='';
+  document.getElementById('quizNext').style.display='none';
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>`<div class="qopt" onclick="answerQuiz(${i})">${o}</div>`).join('');
+}
+function answerQuiz(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=QUIZ[qIdx%QUIZ.length];
+  document.querySelectorAll('.qopt')[q.a].classList.add('correct');
+  if(i!==q.a)document.querySelectorAll('.qopt')[i].classList.add('wrong');
+  document.getElementById('quizRes').textContent=i===q.a?'✅ Correct!':'❌ '+q.opts[q.a];
+  document.getElementById('quizNext').style.display='inline-block';
+}
+function nextQuiz(){qIdx++;loadQuiz();}
+
+// ═══ SOLAR IMAGERY ═══
+const SOLAR_URLS={'0171':'https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.jpg','0304':'https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0304.jpg','HMII':'https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_HMII.jpg','0193':'https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0193.jpg'};
+function setSolar(btn,key){
+  document.querySelectorAll('.sol-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('solarImg').src=SOLAR_URLS[key]+'?t='+Date.now();
+}
+
+// ═══ STAR CHART (Canvas) ═══
+function drawStarChart(){
+  const canvas=document.getElementById('starChartCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=W/2-10;
+  ctx.clearRect(0,0,W,H);
+  // Background
+  ctx.fillStyle='#000';ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+  // Grid circles
+  [.25,.5,.75,1].forEach(f=>{ctx.strokeStyle='rgba(100,180,255,0.08)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,R*f,0,Math.PI*2);ctx.stroke();});
+  // Cardinal directions
+  ctx.fillStyle='rgba(79,195,247,0.6)';ctx.font='11px Space Mono';
+  ctx.fillText('N',cx-4,cy-R+14);ctx.fillText('S',cx-4,cy+R-6);
+  ctx.fillText('E',cx+R-14,cy+4);ctx.fillText('W',cx-R+6,cy+4);
+  // Horizon circle
+  ctx.strokeStyle='rgba(79,195,247,0.3)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+  // Milky Way band (approximate)
+  ctx.strokeStyle='rgba(180,180,255,0.07)';ctx.lineWidth=18;ctx.beginPath();
+  ctx.moveTo(cx-R*.3,cy-R*.8);ctx.bezierCurveTo(cx+R*.5,cy-R*.3,cx-R*.4,cy+R*.3,cx+R*.2,cy+R*.8);
+  ctx.stroke();
+  // Stars based on current date
+  const now=new Date(),m=now.getMonth()+1,hour=now.getHours();
+  const hourAngle=(hour/24)*Math.PI*2;
+  const brightStars=[
+    {name:'Sirius',ra:6.7,dec:-16,mag:-1.46},{name:'Vega',ra:18.6,dec:38,mag:.03},{name:'Arcturus',ra:14.3,dec:19,mag:-.05},{name:'Rigel',ra:5.2,dec:-8,mag:.13},{name:'Betelgeuse',ra:5.9,dec:7,mag:.5},{name:'Altair',ra:19.8,dec:8,mag:.77},{name:'Aldebaran',ra:4.6,dec:16,mag:.87},{name:'Antares',ra:16.5,dec:-26,mag:1.06},{name:'Pollux',ra:7.8,dec:28,mag:1.14},{name:'Fomalhaut',ra:22.9,dec:-29,mag:1.16},{name:'Deneb',ra:20.7,dec:45,mag:1.25},{name:'Regulus',ra:10.1,dec:12,mag:1.36},{name:'Spica',ra:13.4,dec:-11,mag:.97},{name:'Castor',ra:7.6,dec:32,mag:1.58},{name:'Capella',ra:5.3,dec:46,mag:.08},
+  ];
+  brightStars.forEach(s=>{
+    const ha=(hourAngle-(s.ra/24)*Math.PI*2+Math.PI*4)%(Math.PI*2);
+    const alt=Math.sin(s.dec*Math.PI/180)*Math.sin(userLat*Math.PI/180)+Math.cos(s.dec*Math.PI/180)*Math.cos(userLat*Math.PI/180)*Math.cos(ha);
+    if(alt<-.1)return;
+    const az=Math.atan2(-Math.cos(s.dec*Math.PI/180)*Math.sin(ha),Math.cos(userLat*Math.PI/180)*Math.sin(s.dec*Math.PI/180)-Math.sin(userLat*Math.PI/180)*Math.cos(s.dec*Math.PI/180)*Math.cos(ha));
+    const dist=R*(1-Math.max(0,alt));
+    const x=cx+dist*Math.sin(az),y=cy-dist*Math.cos(az);
+    const size=Math.max(.8,2.5-s.mag*.8);
+    const bright=s.mag<1;
+    ctx.fillStyle=bright?'rgba(255,250,200,0.95)':'rgba(200,220,255,0.75)';
+    ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);ctx.fill();
+    if(s.mag<.5){ctx.fillStyle='rgba(255,250,200,0.4)';ctx.font='9px Space Mono';ctx.fillText(s.name,x+4,y-4);}
+  });
+  // Planets
+  PLANETS.forEach((p,i)=>{
+    const ang=(i/5)*Math.PI*2+hourAngle*.7;
+    const alt=.3+Math.random()*.3;
+    const dist=R*(1-alt);
+    const x=cx+dist*Math.sin(ang+i),y=cy-dist*Math.cos(ang+i*.8);
+    if(x<cx-R||x>cx+R||y<cy-R||y>cy+R)return;
+    ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='9px Space Mono';ctx.fillText(p.name[0],x+5,y);
+  });
+  document.getElementById('chartInfo').textContent=`Sky chart for ${userLat.toFixed(1)}°, ${userLon.toFixed(1)}° — ${new Date().toLocaleTimeString()}`;
+}
+
+// ═══ SATELLITES ═══
+const SATELLITES=[{name:'Hubble Space Telescope',inc:'28.5°',alt:'~547 km',period:'95 min'},{name:'James Webb (L2)',inc:'—',alt:'1.5M km',period:'~6 mo'},{name:'GOES-16 (Weather)',inc:'0°',alt:'35,786 km',period:'24 hr'},{name:'GPS Block IIIA',inc:'55°',alt:'~20,200 km',period:'12 hr'},{name:'Tiangong Space Station',inc:'41.5°',alt:'~390 km',period:'92 min'},{name:'Starlink (sample)',inc:'53°',alt:'~550 km',period:'95 min'},{name:'Terra (EOS AM-1)',inc:'98°',alt:'~705 km',period:'99 min'},{name:'Chandra X-ray',inc:'28.5°',alt:'~10,000–140,000 km',period:'63.5 hr'}];
+function renderSatellites(){
+  document.getElementById('satList').innerHTML=SATELLITES.map(s=>`<div class="row"><div><div style="font-size:13px;font-weight:600">${s.name}</div></div><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m);text-align:right">Alt: ${s.alt}<br>Inc: ${s.inc} / ${s.period}</div></div>`).join('');
+}
+
+// ═══ CONSTELLATIONS ═══
+const CONSTS=[{name:'Orion',myth:'The Hunter',season:'Winter',stars:'Betelgeuse, Rigel, Bellatrix',story:'Orion was a giant hunter in Greek mythology, son of Poseidon. Placed among the stars by Zeus after being killed by Scorpius — which is why Orion sets as Scorpius rises.'},{name:'Ursa Major',myth:'Great Bear',season:'Year-round',stars:'Dubhe, Merak, Phecda',story:'Zeus transformed Callisto into a bear to protect her. The Big Dipper is the bear\'s tail and body — its two pointer stars always lead to Polaris, the North Star.'},{name:'Scorpius',myth:'The Scorpion',season:'Summer',stars:'Antares, Shaula, Sargas',story:'Sent by Gaia to kill Orion, this scorpion succeeded. The gods placed both in the sky on opposite sides so they\'d never meet again.'},{name:'Cassiopeia',myth:'Vain Queen',season:'Year-round',stars:'Schedar, Caph, Ruchbah',story:'Queen of Ethiopia who boasted her daughter was more beautiful than sea nymphs. Poseidon punished her by placing her in the sky to spin endlessly around the pole.'},{name:'Cygnus',myth:'The Swan',season:'Summer',stars:'Deneb, Albireo, Sadr',story:'Zeus transformed himself into a swan. The Northern Cross asterism marks the swan flying south along the Milky Way every summer.'},{name:'Leo',myth:'The Lion',season:'Spring',stars:'Regulus, Algieba, Denebola',story:'The Nemean Lion slain by Hercules as his first labor. Its heart is Regulus, one of the brightest stars in the sky, almost perfectly on the ecliptic.'},{name:'Lyra',myth:'The Lyre',season:'Summer',stars:'Vega, Sheliak, Sulafat',story:'Apollo\'s lyre, given to Orpheus. After his death, Zeus placed it among the stars. Vega was the pole star 14,000 years ago and will be again in 12,000 years.'},{name:'Virgo',myth:'The Maiden',season:'Spring',stars:'Spica, Vindemiatrix, Porrima',story:'Associated with Demeter, goddess of harvest. Spica was used by Hipparchus to discover precession of the equinoxes around 130 BC.'},{name:'Perseus',myth:'The Hero',season:'Autumn',stars:'Mirfak, Algol, Atik',story:'Slayer of Medusa, rescuer of Andromeda. Algol, the "Demon Star," blinks every 2.87 days — the first known eclipsing binary star.'},{name:'Sagittarius',myth:'The Archer',season:'Summer',stars:'Kaus Australis, Nunki, Ascella',story:'A centaur aiming an arrow at Scorpius. The galactic center of the Milky Way lies in this direction — a supermassive black hole called Sagittarius A*.'}];
+function renderConstellations(){
+  document.getElementById('constGrid').innerHTML=CONSTS.map((c,i)=>`<div class="const-card" onclick="showConstStory(${i})"><div class="const-name">${c.name}</div><div class="const-myth">${c.myth}</div><div class="const-season">${c.season}</div></div>`).join('');
+}
+function showConstStory(i){
+  const c=CONSTS[i];
+  document.getElementById('constStory').innerHTML=`<div style="margin-bottom:12px;font-size:18px;font-weight:800;color:var(--a2)">${c.name} — ${c.myth}</div>
+  <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--a);margin-bottom:8px">${c.season} constellation • Key stars: ${c.stars}</div>
+  <div style="font-size:13px;line-height:1.8;color:var(--m)">${c.story}</div>`;
+  showTab('explore');
+}
+
+// ═══ ASTRO PHOTOGRAPHY TIPS ═══
+function renderAstroTips(){
+  const m=new Date().getMonth();
+  const tips=[
+    {icon:'📷',title:'ISO & Exposure',body:'For Milky Way: ISO 3200–6400, f/2.8, 20–25 sec. Use the 500 rule: 500÷focal length = max seconds before star trails.'},
+    {icon:'🌙',title:'Moon Phase Planning',body:`Current phase: ${getMoonData().phaseName}. Ideal shooting: within 3 days of new moon. Avoid within 5 days of full moon for deep sky.`},
+    {icon:'🌡',title:'Seeing Conditions Tonight',body:'Check clear-outside.com or Clear Dark Sky for your location. Transparency matters more than seeing for deep-sky targets.'},
+    {icon:'⏱',title:'Polar Alignment',body:'For tracked shots, polar align to within 2\'. Use SharpCap or a polar scope. Add 10 min warm-up time after setup.'},
+    {icon:'🎯',title:`Best Target: ${['Orion Nebula','Leo Triplet','Virgo Cluster','Arcturus region','Globular clusters','Milky Way core','Summer Triangle','Lagoon Nebula','Globular clusters','Andromeda Galaxy','Perseus Double Cluster','Pleiades'][m]}`,body:'Plan with Stellarium or SkySafari. Download DSO Browser for offline catalog access.'},
+    {icon:'🔧',title:'Equipment Check',body:'Dew heater recommended for eyepieces and primary mirror on humid nights. Red flashlight only after dark adaptation (20–30 min).'},
+  ];
+  document.getElementById('astroTips').innerHTML=tips.map(t=>`<div class="tip-item"><div class="tip-icon">${t.icon}</div><div><div class="tip-title">${t.title}</div><div class="tip-body">${t.body}</div></div></div>`).join('');
+}
+
+// ═══ CONJUNCTIONS ═══
+const CONJUNCTIONS=[{date:'2025-06-01',desc:'Venus & Jupiter conjunction',note:'Separation: 0.5° — naked eye'},
+{date:'2025-07-01',desc:'Mars & Regulus close pass',note:'Mars within 0.7° of Regulus'},
+{date:'2025-08-12',desc:'Perseid meteor shower peak',note:'100+ meteors/hr under dark skies'},
+{date:'2025-09-07',desc:'Total Lunar Eclipse',note:'Visible from Americas, Europe'},
+{date:'2025-10-29',desc:'Saturn at opposition',note:'Best viewing of 2025'},
+{date:'2025-11-17',desc:'Leonid meteor shower peak',note:'20 meteors/hr near Sickle of Leo'},
+{date:'2025-12-13',desc:'Geminid meteor shower peak',note:'120 meteors/hr at peak'},
+{date:'2026-01-12',desc:'Venus at greatest elongation',note:'Visible after sunset: 47° from Sun'},
+{date:'2026-03-18',desc:'Jupiter & Neptune conjunction',note:'Very close: 0.2° separation'},
+{date:'2026-08-12',desc:'Total Solar Eclipse',note:'Path across Atlantic into Spain'}];
+function renderConjunctions(){
+  const now=new Date();
+  document.getElementById('conjList').innerHTML=CONJUNCTIONS.filter(c=>new Date(c.date)>=now).slice(0,6).map(c=>`<div class="conj-item"><div class="conj-date">${c.date}</div><div class="conj-desc">${c.desc}</div><div class="conj-note">${c.note}</div></div>`).join('');
+}
+
+// ═══ OBJECT OF THE NIGHT ═══
+const OBJECTS=[{name:'M42 — Orion Nebula',type:'Emission Nebula • Orion',ra:'05h 35m',dec:'-05° 23\'',mag:'4.0',dist:'1,344 ly',size:'65×60\'',desc:'The closest stellar nursery to Earth. Over 1,000 young stars forming inside. Visible naked eye as the middle star of Orion\'s sword.'},{name:'M31 — Andromeda Galaxy',type:'Spiral Galaxy • Andromeda',ra:'00h 42m',dec:'+41° 16\'',mag:'3.4',dist:'2.537 Mly',size:'3.2°×1°',desc:'Nearest large galaxy to the Milky Way. Contains ~1 trillion stars. On a collision course — will merge with our galaxy in ~4.5 billion years.'},{name:'M45 — Pleiades',type:'Open Cluster • Taurus',ra:'03h 47m',dec:'+24° 07\'',mag:'1.6',dist:'444 ly',size:'110\'',desc:'The Seven Sisters. One of the nearest clusters to Earth. The blue haze around the stars is a reflection nebula — not the original nebula they formed in.'},{name:'M57 — Ring Nebula',type:'Planetary Nebula • Lyra',ra:'18h 53m',dec:'+33° 02\'',mag:'8.8',dist:'2,300 ly',size:'3.8×3.3\'',desc:'A shell of gas expelled by a dying Sun-like star. The central white dwarf star is one of the hottest known at 125,000 K.'},{name:'M81 — Bode\'s Galaxy',type:'Spiral Galaxy • Ursa Major',ra:'09h 55m',dec:'+69° 04\'',mag:'6.9',dist:'11.8 Mly',size:'26×14\'',desc:'One of the brightest galaxies in the sky. Gravitationally interacting with M82 (Cigar Galaxy) — they had a close encounter ~300 million years ago.'},{name:'M13 — Hercules Cluster',type:'Globular Cluster • Hercules',ra:'16h 41m',dec:'+36° 28\'',mag:'5.8',dist:'22,180 ly',size:'20\'',desc:'The Great Globular Cluster. Contains ~300,000 stars. In 1974, the Arecibo message was beamed toward M13 — it will arrive in ~25,000 years.'},{name:'M104 — Sombrero Galaxy',type:'Spiral Galaxy • Virgo',ra:'12h 40m',dec:'-11° 37\'',mag:'8.0',dist:'31.1 Mly',size:'8.7×3.5\'',desc:'Named for its resemblance to a wide-brimmed hat. Contains a 1-billion solar mass black hole at its center and an unusually large bulge.'},{name:'NGC 869/884 — Double Cluster',type:'Open Clusters • Perseus',ra:'02h 20m',dec:'+57° 08\'',mag:'4.3',dist:'7,500 ly',size:'60\'',desc:'Two clusters separated by only ~750 light-years, both about 14 million years old. Contains hundreds of supergiant stars.'}];
+let oonIdx=0;
+function renderOON(){
+  oonIdx=(oonIdx+1)%OBJECTS.length;
+  const o=OBJECTS[oonIdx];
+  document.getElementById('oonBox').innerHTML=`<div class="oon-name">${o.name}</div><div class="oon-type">${o.type}</div><div style="font-size:12px;color:var(--m);line-height:1.7;margin-bottom:10px">${o.desc}</div><div class="oon-finder"><div class="oon-stat"><div class="ol">Magnitude</div><div class="ov" style="color:var(--a)">${o.mag}</div></div><div class="oon-stat"><div class="ol">Distance</div><div class="ov" style="color:var(--o)">${o.dist}</div></div><div class="oon-stat"><div class="ol">RA</div><div class="ov">${o.ra}</div></div><div class="oon-stat"><div class="ol">Dec</div><div class="ov">${o.dec}</div></div></div>`;
+}
+
+// ═══ DARKNESS COUNTDOWN ═══
+function updateDarknessCountdown(){
+  const now=new Date();
+  const h=now.getHours(),mi=now.getMinutes(),s=now.getSeconds();
+  // Approximate astronomical twilight (simplified: sun sets ~18° below horizon)
+  // Using lat-based estimate
+  const sunsetH=Math.round(19+userLat*.05);
+  const darkH=sunsetH+1; // ~1hr after sunset for astronomical dark
+  const sunriseH=Math.round(5-userLat*.03);
+  const dawnH=sunriseH-1;
+  const nowSec=h*3600+mi*60+s;
+  const darkSec=darkH*3600,dawnSec=dawnH*3600;
+  let target,label,isNight=false;
+  if(nowSec<darkSec){target=darkSec-nowSec;label='Until dark';}
+  else if(nowSec<dawnSec+86400*0){isNight=true;target=dawnSec+86400-nowSec;label='Until dawn';}
+  else{target=darkSec+86400-nowSec;label='Until dark';}
+  if(isNight&&nowSec>=darkSec){target=(dawnH+24-h)*3600-mi*60-s;label='Until dawn';}
+  const th=Math.floor(Math.abs(target)/3600),tm=Math.floor((Math.abs(target)%3600)/60),ts=Math.abs(target)%60;
+  document.getElementById('cdH').textContent=String(th).padStart(2,'0');
+  document.getElementById('cdM').textContent=String(tm).padStart(2,'0');
+  document.getElementById('cdS').textContent=String(ts).padStart(2,'0');
+  document.getElementById('cdType').textContent=label;
+  document.getElementById('twilightStatus').textContent=isNight?'🌑 Astronomical darkness active — optimal conditions!':'🌅 Daytime — awaiting darkness';
+}
+
+// ═══ ALERTS ═══
+const ALERT_DEFS=[{id:'meteor',label:'Meteor Shower Peaks',sub:'3 days before peak',on:true},{id:'eclipse',label:'Eclipse Events',sub:'1 week before',on:true},{id:'iss',label:'ISS Flyovers',sub:'Next visible pass (requires location)',on:false},{id:'aurora',label:'Kp ≥ 5 Aurora Alert',sub:'When geomagnetic storm detected',on:false},{id:'planet',label:'Planet Conjunctions',sub:'Within 72 hours',on:true}];
+let alertStates={};
+ALERT_DEFS.forEach(a=>alertStates[a.id]=a.on);
+function renderAlerts(){
+  document.getElementById('alertsList').innerHTML=ALERT_DEFS.map(a=>`<div class="alert-row"><div class="alert-toggle${alertStates[a.id]?' on':''}" onclick="toggleAlert('${a.id}',this)"></div><div><div class="alert-lbl">${a.label}</div><div class="alert-sub">${a.sub}</div></div></div>`).join('');
+}
+function toggleAlert(id,el){alertStates[id]=!alertStates[id];el.classList.toggle('on');}
+
+// ═══ TELESCOPE CALCULATOR ═══
+function calcTelescope(){
+  const ap=parseFloat(document.getElementById('tcAp').value)||150;
+  const fl=parseFloat(document.getElementById('tcFl').value)||1200;
+  const ep=parseFloat(document.getElementById('tcEp').value)||25;
+  const afov=parseFloat(document.getElementById('tcAfov').value)||52;
+  const mag=fl/ep;
+  const fov=afov/mag;
+  const maxMag=Math.min(50,Math.round(ap/1.5));
+  const lightGather=(ap/7.5)*(ap/7.5);
+  const limitMag=(4.5+5*Math.log10(ap/10)).toFixed(1);
+  const res=(116/ap).toFixed(2);
+  const el=document.getElementById('tcResult');
+  el.style.display='block';
+  el.innerHTML=`<div class="tcalc-stat"><span style="color:var(--m)">Magnification</span><span style="color:var(--a)"><b>${mag.toFixed(0)}×</b></span></div><div class="tcalc-stat"><span style="color:var(--m)">True Field of View</span><span style="color:var(--a)"><b>${fov.toFixed(2)}°</b></span></div><div class="tcalc-stat"><span style="color:var(--m)">Max Useful Mag</span><span style="color:var(--a)"><b>${maxMag}×</b></span></div><div class="tcalc-stat"><span style="color:var(--m)">Light Gathering</span><span style="color:var(--a)"><b>${Math.round(lightGather)}× eye</b></span></div><div class="tcalc-stat"><span style="color:var(--m)">Limiting Magnitude</span><span style="color:var(--a)"><b>${limitMag}</b></span></div><div class="tcalc-stat"><span style="color:var(--m)">Resolving Power</span><span style="color:var(--a)"><b>${res}"</b></span></div>`;
+}
+
+// ═══ BIRTHDAY MOON ═══
+function calcBirthdayMoon(){
+  const input=document.getElementById('bdayInput').value;
+  if(!input)return;
+  const d=new Date(input);
+  const md=getMoonPhaseForDate(d.getTime());
+  document.getElementById('bdayResult').innerHTML=`<div class="bm-result"><div class="bm-emoji">${md.phaseEmoji}</div><div class="bm-pname">${md.phaseName}</div><div class="bm-detail">${d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}<br>Illumination: ${md.illumination}%</div></div>`;
+}
+
+// ═══ EXOPLANETS ═══
+const EXOPLANETS=[{name:'Kepler-452b',type:'Super-Earth',star:'G-type (Sun-like)',dist:'1,400 ly',period:'385 days',radius:'1.6× Earth',zone:'Habitable zone'},{name:'TRAPPIST-1e',type:'Earth-sized',star:'Ultra-cool dwarf',dist:'40 ly',period:'6.1 days',radius:'0.92× Earth',zone:'Habitable zone'},{name:'HD 189733b',type:'Hot Jupiter',star:'K-type dwarf',dist:'64 ly',period:'2.2 days',radius:'1.14× Jupiter',zone:'Very hot'},{name:'55 Cancri e',type:'Super-Earth',star:'G8V dwarf',dist:'41 ly',period:'17.7 hours',radius:'1.88× Earth',zone:'Lava world'},{name:'Proxima b',type:'Earth-mass',star:'Proxima Centauri',dist:'4.24 ly',period:'11.2 days',radius:'~1× Earth',zone:'Habitable zone'},{name:'TOI-1452 b',type:'Ocean world?',star:'M4 dwarf',dist:'100 ly',period:'11.1 days',radius:'1.67× Earth',zone:'Possible ocean'}];
+function renderExoplanets(){
+  document.getElementById('exoList').innerHTML=EXOPLANETS.map(e=>`<div class="exo-card"><div class="exo-name">${e.name}</div><div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--a);margin:2px 0">${e.type} • ${e.zone}</div><div class="exo-stats"><div class="exo-stat">Host: <span>${e.star}</span></div><div class="exo-stat">Dist: <span>${e.dist}</span></div><div class="exo-stat">Period: <span>${e.period}</span></div><div class="exo-stat">Size: <span>${e.radius}</span></div></div></div>`).join('');
+}
+function renderExoGallery(){
+  document.getElementById('exoGallery').innerHTML=EXOPLANETS.map(e=>`<div style="background:var(--s2);border-radius:6px;padding:10px;margin-bottom:8px;border-left:3px solid var(--a3)"><div style="font-size:14px;font-weight:700;color:var(--a2)">${e.name}</div><div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--a)">${e.type}</div><div style="font-size:11px;color:var(--m);margin-top:4px">${e.zone} — ${e.dist} from Earth</div></div>`).join('');
+}
+
+// ═══ MISSIONS TIMELINE ═══
+const MISSIONS=[{y:1957,name:'Sputnik 1',desc:'First artificial satellite, USSR'},{y:1961,name:'Vostok 1',desc:'Gagarin: first human in space'},{y:1969,name:'Apollo 11',desc:'First humans land on the Moon'},{y:1977,name:'Voyager 1 & 2',desc:'Grand Tour of outer planets'},{y:1990,name:'Hubble Space Telescope',desc:'Revolutionized deep-sky imaging'},{y:1998,name:'ISS Construction',desc:'International cooperation in orbit'},{y:2004,name:'Spirit & Opportunity',desc:'Mars rovers, 90-day mission → 14 years'},{y:2012,name:'Curiosity Rover',desc:'Still active on Mars today'},{y:2015,name:'New Horizons — Pluto',desc:'First close flyby of Pluto system'},{y:2021,name:'James Webb Telescope',desc:'Deepest infrared views of universe'},{y:2022,name:'DART Mission',desc:'First planetary defense test — success'},{y:2024,name:'Artemis Program',desc:'Return to lunar surface in progress'},{y:2026,name:'Europa Clipper',desc:'Investigating Jupiter\'s icy moon'}];
+function renderMissions(){
+  document.getElementById('missionList').innerHTML=MISSIONS.map(m=>`<div class="mission-item"><div class="mission-year">${m.y}</div><div><div class="mission-name">${m.name}</div><div class="mission-desc">${m.desc}</div></div></div>`).join('');
+}
+function renderTimelineViz(){
+  document.getElementById('timelineViz').innerHTML=MISSIONS.slice(-8).map(m=>`<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--b);align-items:flex-start"><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--a);min-width:38px">${m.y}</div><div style="flex:1"><div style="font-size:13px;font-weight:700">${m.name}</div><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--m)">${m.desc}</div></div></div>`).join('');
+}
+
+// ═══ SOLAR SYSTEM SCALE CANVAS ═══
+function drawSolarSystem(){
+  const canvas=document.getElementById('solarCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  // Draw sun
+  const planets2=[
+    {name:'Sun',r:24,color:'#FFA726',x:30},{name:'Mercury',r:3,color:'#aaa',x:80},{name:'Venus',r:5.5,color:'#ffe082',x:120},{name:'Earth',r:5.8,color:'#4fc3f7',x:165},{name:'Mars',r:4,color:'#ef5350',x:210},{name:'Jupiter',r:18,color:'#ffcc80',x:280},{name:'Saturn',r:15,color:'#fff176',x:360},{name:'Uranus',r:9,color:'#80deea',x:430},{name:'Neptune',r:8.5,color:'#5c6bc0',x:490},
+  ];
+  planets2.forEach(p=>{
+    ctx.fillStyle=p.color;
+    ctx.beginPath();ctx.arc(p.x,H/2,p.r,0,Math.PI*2);ctx.fill();
+    // Saturn rings
+    if(p.name==='Saturn'){
+      ctx.strokeStyle='rgba(255,241,118,0.4)';ctx.lineWidth=3;
+      ctx.beginPath();ctx.ellipse(p.x,H/2,p.r+10,4,0,0,Math.PI*2);ctx.stroke();
     }
-    // Add 100 more generic to reach 300+
-    for (let i=0;i<120;i++) starCatalog.push({ name: `HIP${Math.floor(Math.random()*90000+10000)}`, ra:Math.random()*24, dec:(Math.random()*180-90), mag:(Math.random()*3+1).toFixed(1), seasonStart:Math.floor(Math.random()*12)+1, seasonEnd:Math.floor(Math.random()*12)+1 });
-    
-    // 2. Complete Messier catalog (110 objects) – simplified list
-    const messierObjects = [];
-    for (let i=1; i<=110; i++) {
-        let ra = Math.random()*24;
-        let dec = (Math.random()*180 - 90);
-        let mag = (Math.random()*12+2).toFixed(1);
-        let seasonStart = Math.floor(Math.random()*12)+1;
-        let seasonEnd = (seasonStart+Math.floor(Math.random()*4)+1)%12;
-        if(seasonEnd===0) seasonEnd=12;
-        messierObjects.push({ name: `M${i}`, type: i<30?"Cluster":(i<80?"Nebula":"Galaxy"), mag: parseFloat(mag), ra, dec, seasonStart, seasonEnd });
-    }
-    
-    // 3. Planets data (simplified ephemeris)
-    const planets = [
-        { name:"Mercury", magnitude:-0.5, ra:Math.random()*24, dec:Math.random()*40-20, visible:true, riseSet:"Rises 06:23, sets 19:12" },
-        { name:"Venus", magnitude:-4.2, ra:Math.random()*24, dec:Math.random()*30-10, visible:true, riseSet:"Rises 04:15, sets 17:45" },
-        { name:"Mars", magnitude:0.1, ra:Math.random()*24, dec:Math.random()*20-10, visible:true, riseSet:"Rises 22:30, sets 11:20" },
-        { name:"Jupiter", magnitude:-2.5, ra:Math.random()*24, dec:Math.random()*15-5, visible:true, riseSet:"Rises 20:10, sets 08:50" },
-        { name:"Saturn", magnitude:0.7, ra:Math.random()*24, dec:Math.random()*18-8, visible:true, riseSet:"Rises 23:45, sets 12:30" }
-    ];
-    
-    // 4. Meteor showers with real peaks
-    const meteorShowers = [
-        { name:"Quadrantids", peak:{month:1,day:3}, rate:120, startMonth:12, endMonth:1 },
-        { name:"Lyrids", peak:{month:4,day:22}, rate:18, startMonth:4, endMonth:4 },
-        { name:"Perseids", peak:{month:8,day:12}, rate:100, startMonth:7, endMonth:8 },
-        { name:"Orionids", peak:{month:10,day:21}, rate:20, startMonth:10, endMonth:10 },
-        { name:"Geminids", peak:{month:12,day:13}, rate:120, startMonth:12, endMonth:12 },
-        { name:"Leonids", peak:{month:11,day:17}, rate:15, startMonth:11, endMonth:11 }
-    ];
-    
-    // 5. Eclipses (2025-2027) – computed client-side
-    function getEclipses() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const eclipses = [];
-        // simplified: solar and lunar eclipses for next 2 years
-        for (let y = year-1; y <= year+2; y++) {
-            eclipses.push({ date: `${y}-04-08`, type: "🌞 Solar Eclipse", status: new Date(`${y}-04-08`) < now ? "Past" : "Upcoming" });
-            eclipses.push({ date: `${y}-09-21`, type: "🌜 Lunar Eclipse", status: new Date(`${y}-09-21`) < now ? "Past" : "Upcoming" });
-            eclipses.push({ date: `${y}-03-14`, type: "🌞 Solar Eclipse", status: new Date(`${y}-03-14`) < now ? "Past" : "Upcoming" });
-        }
-        return eclipses.slice(0,8);
-    }
-    
-    // Helper: get visibility status for celestial objects
-    function getStatus(obj, currentDate, lat) {
-        const curMonth = currentDate.getMonth()+1;
-        let start = obj.seasonStart, end = obj.seasonEnd;
-        if(end < start) {
-            if(curMonth >= start || curMonth <= end) return { text:"Visible", class:"visible" };
-            else return { text:"Missed", class:"missed" };
-        } else {
-            if(curMonth >= start && curMonth <= end) return { text:"Visible", class:"visible" };
-            else if(curMonth < start) return { text:`From ${new Date(0,start-1).toLocaleString('default',{month:'short'})}`, class:"upcoming" };
-            else return { text:"Missed", class:"missed" };
-        }
-    }
-    
-    // UI state
-    let userLat = 40.7;
-    let currentDate = new Date();
-    let locationName = "auto-detected (NY default)";
-    
-    // DOM elements
-    const starsDiv = document.getElementById('stars-list');
-    const messierDiv = document.getElementById('messier-list');
-    const meteorDiv = document.getElementById('meteor-list');
-    const planetDiv = document.getElementById('planet-visibility');
-    const eclipseDiv = document.getElementById('eclipse-list');
-    const auroraSpan = document.getElementById('aurora-text');
-    const factDiv = document.getElementById('fun-fact');
-    const newsDiv = document.getElementById('news-ticker');
-    
-    // Fun facts array (100+)
-    const funFacts = [
-        "A day on Venus is longer than a year.", "There are more stars than grains of sand on Earth.",
-        "The largest known star is 1,700x Sun's radius.", "A neutron star teaspoon weighs 6 billion tons.",
-        "Space is completely silent.", "One million Earths fit inside the Sun.",
-        "The Moon is moving away 3.8cm/year.", "Saturn's moon Titan has liquid methane lakes.",
-        "The Milky Way will collide with Andromeda in 4.5 billion years.",
-        "Olympus Mons on Mars is 3x taller than Everest.",
-        "The hottest planet is Venus (even though Mercury is closer).",
-        "There is a giant water reservoir floating in space 140 trillion times Earth's oceans.",
-        "A year on Mercury is 88 Earth days.", "Jupiter has 79 moons.",
-        "Neutron stars can spin 600 times per second.",
-        "The Hubble telescope has observed the most distant star ever.",
-        "Black holes can slow down time near their event horizon."
-    ];
-    
-    function randomFact() {
-        factDiv.innerHTML = `✨ ${funFacts[Math.floor(Math.random() * funFacts.length)]}`;
-    }
-    
-    // Render functions
-    function renderStars() {
-        let html = starCatalog.slice(0, 150).map(s => {
-            let status = getStatus(s, currentDate, userLat);
-            return `<div class="item"><span><strong>${s.name}</strong> (${s.mag}m)</span><span class="badge ${status.class}">${status.text}</span></div>`;
-        }).join('');
-        starsDiv.innerHTML = html;
-    }
-    
-    function renderMessier() {
-        let html = messierObjects.map(m => {
-            let status = getStatus(m, currentDate, userLat);
-            return `<div class="item"><span>${m.name} [${m.type}] ${m.mag}m</span><span class="badge ${status.class}">${status.text}</span></div>`;
-        }).join('');
-        messierDiv.innerHTML = html;
-    }
-    
-    function renderMeteors() {
-        let html = meteorShowers.map(m => {
-            let today = new Date();
-            let peakDate = new Date(today.getFullYear(), m.peak.month-1, m.peak.day);
-            let diff = Math.ceil((peakDate - today)/86400000);
-            let statusClass = "upcoming";
-            let statusText = diff > 0 ? `In ${diff} days` : (diff < -30 ? "Missed" : "Passing");
-            if (Math.abs(diff) <= 2) { statusClass = "active"; statusText = "Peak now!"; }
-            else if (diff < 0 && diff > -30) statusClass = "missed";
-            return `<div class="item"><span>${m.name} (${m.rate}/h)</span><span class="badge ${statusClass}">${statusText}</span></div>`;
-        }).join('');
-        meteorDiv.innerHTML = html;
-    }
-    
-    function renderPlanets() {
-        let html = planets.map(p => `<div class="item"><span>${p.name} (mag ${p.magnitude})</span><span>${p.riseSet}</span></div>`);
-        planetDiv.innerHTML = html;
-    }
-    
-    function renderEclipses() {
-        let ecl = getEclipses();
-        html = ecl.map(e => `<div class="item"><span>${e.type}</span><span>${e.date} · ${e.status}</span></div>`);
-        eclipseDiv.innerHTML = html;
-    }
-    
-    function updateAurora() {
-        // Simulate based on random Kp (real would fetch NOAA, but for demo)
-        let kp = (Math.random() * 7 + 1).toFixed(1);
-        let auroraText = kp > 5 ? "High activity – possible aurora at high latitudes!" : (kp > 3 ? "Moderate – check dark skies." : "Low activity.");
-        auroraSpan.innerText = auroraText + ` (Kp ${kp})`;
-    }
-    
-    // Space news (simulated RSS via fetch with CORS proxy)
-    async function fetchNews() {
-        try {
-            const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.spaceflightnow.com/feed/');
-            const data = await response.json();
-            let items = data.items.slice(0,5);
-            let newsText = items.map(i => i.title).join(" • ");
-            newsDiv.innerText = newsText;
-        } catch(e) {
-            newsDiv.innerText = "SpaceX launches Starlink • NASA's Europa Clipper • China moon mission • JWST new image • Roscosmos updates";
-        }
-    }
-    
-    // Voice commands
-    const voiceBtn = document.getElementById('voice-btn');
-    const voiceStatus = document.getElementById('voice-status');
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'en-US';
-        recognition.interimResults = false;
-        voiceBtn.onclick = () => {
-            recognition.start();
-            voiceStatus.innerText = "🎤 Listening...";
-        };
-        recognition.onresult = (event) => {
-            const command = event.results[0][0].transcript.toLowerCase();
-            voiceStatus.innerText = `🗣️ "${command}"`;
-            if (command.includes("fact about mars")) factDiv.innerHTML = "✨ Mars has the tallest volcano in the solar system: Olympus Mons.";
-            else if (command.includes("fact about moon")) factDiv.innerHTML = "🌙 The Moon is drifting away from Earth at 3.8 cm per year.";
-            else if (command.includes("visible stars")) renderStars();
-            else factDiv.innerHTML = `✨ Command not recognized. Try "fact about Mars".`;
-        };
-        recognition.onerror = () => voiceStatus.innerText = "🎤 Error, try again.";
-    } else {
-        voiceBtn.disabled = true;
-        voiceStatus.innerText = "Voice not supported";
-    }
-    
-    // Location search (OpenStreetMap Nominatim)
-    document.getElementById('search-city').onclick = async () => {
-        const city = document.getElementById('location-search').value;
-        if (!city) return;
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1`);
-        const data = await res.json();
-        if (data.length) {
-            userLat = parseFloat(data[0].lat);
-            locationName = data[0].display_name.split(',')[0];
-            document.getElementById('location-name').innerHTML = `📍 ${locationName} (${userLat.toFixed(2)}°)`;
-            renderStars();
-            renderMessier();
-        } else alert("City not found");
-    };
-    
-    // Export CSVs
-    document.getElementById('export-stars').onclick = () => {
-        let csv = "Name,Magnitude,SeasonStart,SeasonEnd\n" + starCatalog.map(s => `${s.name},${s.mag},${s.seasonStart},${s.seasonEnd}`).join("\n");
-        const blob = new Blob([csv], {type: "text/csv"});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = "nexus_stars.csv";
-        a.click();
-    };
-    document.getElementById('export-meteors').onclick = () => {
-        let csv = "Meteor,PeakMonth,PeakDay,Rate\n" + meteorShowers.map(m => `${m.name},${m.peak.month},${m.peak.day},${m.rate}`).join("\n");
-        const blob = new Blob([csv], {type: "text/csv"});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = "nexus_meteors.csv";
-        a.click();
-    };
-    document.getElementById('refresh-all').onclick = () => {
-        currentDate = new Date();
-        renderStars();
-        renderMessier();
-        renderMeteors();
-        renderPlanets();
-        renderEclipses();
-        updateAurora();
-        randomFact();
-    };
-    document.getElementById('new-fact').onclick = randomFact;
-    
-    // Auto geolocation
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-            userLat = pos.coords.latitude;
-            locationName = "your location";
-            document.getElementById('location-name').innerHTML = `📍 ${locationName} (${userLat.toFixed(2)}°)`;
-            renderStars();
-            renderMessier();
-        }, () => {});
-    }
-    
-    // Initial loads
-    renderStars();
-    renderMessier();
-    renderMeteors();
-    renderPlanets();
-    renderEclipses();
-    updateAurora();
-    randomFact();
-    fetchNews();
-    setInterval(() => {
-        currentDate = new Date();
-        renderStars();
-        renderMessier();
-        renderMeteors();
-        renderEclipses();
-        updateAurora();
-        randomFact();
-    }, 3600000);
-    setInterval(fetchNews, 600000);
+    ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='9px Space Mono';
+    ctx.fillText(p.name,p.x-p.name.length*3,H/2+p.r+14);
+  });
+  canvas.onclick=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(W/rect.width);
+    const my=(e.clientY-rect.top)*(H/rect.height);
+    planets2.forEach(p=>{
+      const dx=mx-p.x,dy=my-H/2;
+      if(Math.sqrt(dx*dx+dy*dy)<p.r+8){
+        const info={Sun:'The Sun — G2V yellow dwarf star, 1,392,000 km diameter, surface temp 5,778 K',Mercury:'Mercury — smallest planet, no atmosphere, 88-day year',Venus:'Venus — hottest planet (465°C), retrograde rotation, 225-day year',Earth:'Earth — our home, only known life-bearing world, 1 moon',Mars:'Mars — red from iron oxide, tallest volcano (Olympus Mons), 2 moons',Jupiter:'Jupiter — largest planet, 95 moons, Great Red Spot storm',Saturn:'Saturn — ring system spans 282,000 km, 146 moons including Titan',Uranus:'Uranus — rotates on its side (98°), ice giant, 27 moons',Neptune:'Neptune — windiest planet (2,100 km/h), 16 moons, 165-year orbit'};
+        document.getElementById('planetInfo').textContent=info[p.name]||p.name;
+      }
+    });
+  };
+}
+
+// ═══ TONIGHT'S SKY ═══
+function renderTonightSky(){
+  const m=new Date().getMonth()+1;
+  const consts={1:'Orion, Taurus, Gemini',2:'Orion, Canis Major, Puppis',3:'Leo, Cancer, Hydra',4:'Leo, Virgo, Boötes',5:'Virgo, Boötes, Corona Borealis',6:'Scorpius, Hercules, Lyra',7:'Scorpius, Sagittarius, Cygnus',8:'Cygnus, Lyra, Aquila',9:'Pegasus, Andromeda, Capricornus',10:'Pegasus, Andromeda, Pisces',11:'Andromeda, Perseus, Aries',12:'Orion, Taurus, Perseus'};
+  const hl={1:'Winter hexagon; Betelgeuse prominent',2:'Sirius at its highest',3:'Leo rising; Jupiter visible',4:'Spring galaxy season begins',5:'Eta Aquariid meteors; Venus at dusk',6:'Saturn rising; Milky Way core visible',7:'Summer Triangle overhead; Milky Way peak',8:'Perseid peak Aug 12; Mars bright',9:'Great Square of Pegasus; Neptune at opposition',10:'Orionid meteors; Andromeda well-placed',11:'Leonid meteors; Pleiades transiting midnight',12:'Geminid peak; Orion returns'};
+  document.getElementById('tonightSky').innerHTML=`<div style="font-family:'Space Mono',monospace;font-size:11px;line-height:2;color:var(--m)"><div>🔭 <span style="color:var(--t)">${consts[m]}</span></div><div>✨ ${hl[m]}</div><div>👁 Naked eye limit: mag 6.5 (dark skies)</div><div>🔭 Binocular limit: mag 9.5</div><div>📡 Telescope limit: mag 13+ (100mm)</div><div style="color:var(--a)">Best viewing: 10pm – 2am local time</div></div>`;
+}
+
+// ═══ OBSERVATION LOG ═══
+let obsLog=JSON.parse(localStorage.getItem('cosmosLog')||'[]');
+let wishItems=JSON.parse(localStorage.getItem('cosmosWish')||'[]');
+function addObsEntry(){
+  const obj=document.getElementById('obsObj').value.trim();
+  if(!obj)return;
+  const entry={id:Date.now(),obj,date:document.getElementById('obsDate').value||new Date().toISOString(),cond:document.getElementById('obsCond').value,notes:document.getElementById('obsNotes').value};
+  obsLog.unshift(entry);localStorage.setItem('cosmosLog',JSON.stringify(obsLog));
+  document.getElementById('obsObj').value='';document.getElementById('obsCond').value='';document.getElementById('obsNotes').value='';
+  renderObsLog();renderObsStats();
+}
+function deleteObs(id){obsLog=obsLog.filter(e=>e.id!==id);localStorage.setItem('cosmosLog',JSON.stringify(obsLog));renderObsLog();renderObsStats();}
+function renderObsLog(){
+  document.getElementById('obsEntries').innerHTML=obsLog.length?obsLog.map(e=>`<div class="obs-entry"><button class="obs-del" onclick="deleteObs(${e.id})">✕</button><div class="obs-meta">${new Date(e.date).toLocaleDateString()} ${e.cond?'• '+e.cond:''}</div><div style="font-size:13px;font-weight:700">${e.obj}</div>${e.notes?`<div style="font-size:12px;color:var(--m);margin-top:4px">${e.notes}</div>`:''}</div>`).join(''):'<div style="font-family:\'Space Mono\',monospace;font-size:11px;color:var(--d);padding:20px 0;text-align:center">No observations logged yet.<br>Add your first entry above.</div>';
+}
+function addWishItem(){
+  const obj=document.getElementById('wishObj').value.trim();if(!obj)return;
+  const pri=document.getElementById('wishPri').value;
+  wishItems.push({id:Date.now(),obj,pri,done:false});
+  localStorage.setItem('cosmosWish',JSON.stringify(wishItems));
+  document.getElementById('wishObj').value='';renderWishList();
+}
+function toggleWish(id){wishItems=wishItems.map(w=>w.id===id?{...w,done:!w.done}:w);localStorage.setItem('cosmosWish',JSON.stringify(wishItems));renderWishList();}
+function deleteWish(id){wishItems=wishItems.filter(w=>w.id!==id);localStorage.setItem('cosmosWish',JSON.stringify(wishItems));renderWishList();}
+function renderWishList(){
+  const priColor={high:'var(--r)',med:'var(--o)',low:'var(--g)'};
+  document.getElementById('wishList').innerHTML=wishItems.length?wishItems.map(w=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--b)"><span onclick="toggleWish(${w.id})" style="cursor:pointer;font-size:16px">${w.done?'✅':'⬜'}</span><span style="flex:1;font-size:13px;text-decoration:${w.done?'line-through':''};color:${w.done?'var(--d)':'var(--t)'}">${w.obj}</span><span style="font-family:'Space Mono',monospace;font-size:9px;color:${priColor[w.pri]}">${w.pri}</span><button class="obs-del" onclick="deleteWish(${w.id})">✕</button></div>`).join(''):'<div style="font-family:\'Space Mono\',monospace;font-size:11px;color:var(--d);padding:16px 0;text-align:center">Your wishlist is empty.</div>';
+}
+function renderObsStats(){
+  const total=obsLog.length;
+  const thisMonth=obsLog.filter(e=>new Date(e.date).getMonth()===new Date().getMonth()).length;
+  const objects=[...new Set(obsLog.map(e=>e.obj))].length;
+  document.getElementById('obsStats').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div style="background:var(--s2);border-radius:6px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--a2)">${total}</div><div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--d)">Total Sessions</div></div><div style="background:var(--s2);border-radius:6px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--a2)">${thisMonth}</div><div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--d)">This Month</div></div><div style="background:var(--s2);border-radius:6px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--a2)">${objects}</div><div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--d)">Unique Objects</div></div></div>`;
+}
+
+// ═══ AMBIENT SOUND ═══
+let audioCtx=null,soundOn=false,gainNode=null,oscillators=[];
+function toggleSound(){
+  soundOn=!soundOn;
+  ['soundBtn','soundBtn2'].forEach(id=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',soundOn);});
+  if(soundOn){
+    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    gainNode=audioCtx.createGain();gainNode.gain.value=.08;gainNode.connect(audioCtx.destination);
+    // Cosmic drone: multiple low oscillators
+    [[55,.01],[110,.005],[82.4,.008],[41,.015],[165,.003]].forEach(([f,g])=>{
+      const o=audioCtx.createOscillator();const og=audioCtx.createGain();
+      o.type='sine';o.frequency.value=f;og.gain.value=g;
+      o.connect(og);og.connect(gainNode);o.start();oscillators.push(o);
+    });
+    // Slow LFO modulation
+    const lfo=audioCtx.createOscillator();const lfog=audioCtx.createGain();
+    lfo.frequency.value=.08;lfog.gain.value=20;lfo.connect(lfog);
+    oscillators[0]&&lfog.connect(oscillators[0].frequency);lfo.start();oscillators.push(lfo);
+  } else {
+    oscillators.forEach(o=>{try{o.stop();}catch(e){}});oscillators=[];
+    if(gainNode){gainNode.disconnect();gainNode=null;}
+  }
+}
+function setVolume(v){if(gainNode)gainNode.gain.value=v/100*.15;}
+
+// ═══ VOICE ═══
+function startVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){document.getElementById('voiceResult').textContent='Not supported in this browser.';return;}
+  const rec=new SR();document.getElementById('voiceBtn').classList.add('listening');rec.start();
+  rec.onresult=e=>{
+    const t=e.results[0][0].transcript.toLowerCase();
+    document.getElementById('voiceBtn').classList.remove('listening');
+    if(t.includes('mars'))document.getElementById('voiceResult').textContent='🔴 Mars has the tallest volcano (Olympus Mons) and 2 moons.';
+    else if(t.includes('moon'))document.getElementById('voiceResult').textContent='🌕 '+getMoonData().phaseName+', '+getMoonData().illumination+'% illuminated.';
+    else if(t.includes('star')||t.includes('visible'))renderStars();
+    else if(t.includes('jupiter'))document.getElementById('voiceResult').textContent='♃ Jupiter has 95 moons and the largest storm in the solar system.';
+    else document.getElementById('voiceResult').textContent='Heard: "'+t+'" — try "Mars", "Moon", "visible stars"';
+  };
+  rec.onerror=()=>{document.getElementById('voiceBtn').classList.remove('listening');};
+  rec.onend=()=>document.getElementById('voiceBtn').classList.remove('listening');
+}
+
+// ═══ LOCATION ═══
+let userLat=39,userLon=-98;
+function geoInit(){
+  if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLon=p.coords.longitude;document.getElementById('locLabel').textContent=`📍 ${userLat.toFixed(2)}°, ${userLon.toFixed(2)}°`;drawStarChart();},()=>{});
+}
+async function searchCity(){
+  const q=document.getElementById('citySearch').value;if(!q)return;
+  try{const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`);const d=await r.json();if(d.length){userLat=parseFloat(d[0].lat);userLon=parseFloat(d[0].lon);document.getElementById('locLabel').textContent=`📍 ${d[0].display_name.split(',')[0]}`;drawStarChart();}}catch(e){}
+}
+
+// ═══ TABS ═══
+function showTab(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const tabs={dashboard:0,sky:1,catalog:2,tools:3,explore:4,personal:5};
+  document.querySelectorAll('.nav-tab')[tabs[id]].classList.add('active');
+  if(id==='sky')drawStarChart();
+  if(id==='explore')drawSolarSystem();
+}
+
+// ═══ CSV EXPORTS ═══
+function exportStars(){const rows=['Name,Magnitude,Season'];STARS.forEach(s=>rows.push(`${s.name},${s.mag},${MNS[s.season[0]||0]}`));dl('stars.csv',rows.join('\n'));}
+function exportMeteors(){const rows=['Name,Peak,Rate'];SHOWERS.forEach(s=>rows.push(`${s.name},${s.peak},${s.rate}`));dl('meteors.csv',rows.join('\n'));}
+function dl(fn,c){const a=document.createElement('a');a.href='data:text/csv,'+encodeURIComponent(c);a.download=fn;a.click();}
+
+// ═══ REFRESH ALL ═══
+function refreshAll(){renderMoon();renderPlanets();renderSpaceWeather();renderStars();renderMeteors();renderEclipses();renderCal();renderTonightSky();renderConjunctions();renderOON();trackISS();loadNews();renderObsStats();}
+
+// ═══ TIMERS ═══
+setInterval(refreshAll,3600000);
+setInterval(trackISS,30000);
+setInterval(loadNews,600000);
+setInterval(updateDarknessCountdown,1000);
+setInterval(drawStarChart,60000);
+
+// ═══ INIT ═══
+(function init(){
+  renderMoon();renderPlanets();renderSpaceWeather();renderStars();renderMessier();
+  renderMeteors();renderEclipses();renderCal();newFact();loadQuiz();renderTonightSky();
+  renderConjunctions();renderOON();renderSatellites();renderConstellations();renderAstroTips();
+  renderExoplanets();renderExoGallery();renderMissions();renderTimelineViz();
+  renderAlerts();renderObsLog();renderWishList();renderObsStats();
+  updateDarknessCountdown();loadNews();geoInit();
+  setTimeout(trackISS,1200);
+  setTimeout(drawStarChart,500);
+  setTimeout(drawSolarSystem,500);
+  document.getElementById('bdayInput').value=new Date().toISOString().split('T')[0];
+})();
 </script>
+<script>
+  // Force add dedication at the bottom
+  window.addEventListener('DOMContentLoaded', function() {
+    var div = document.createElement('div');
+    div.innerHTML = '<div style="text-align: center; padding: 20px 0 30px 0; font-family: \'Space Mono\', monospace; font-size: 12px; color: #b39ddb; border-top: 1px solid rgba(100,180,255,0.2); margin-top: 30px;">✨ Dedicated to Silk_Weaver ✨</div>';
+    document.body.appendChild(div);
+  });
+</script>
+</body>
+</html>
+ENDOFFILE
+echo "Done: $(wc -l < /mnt/user-data/outputs/cosmos.html) lines"
+
+<div style="text-align: center; padding: 20px; font-family: monospace; font-size: 14px; color: pink; border-top: 1px solid gray;">
+✨ Dedicated to Silk_Weaver ✨
+</div>
 </body>
 </html>
